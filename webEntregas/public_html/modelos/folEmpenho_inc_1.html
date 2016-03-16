@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JSP Page</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Folha de Estilo Local -->
+        <link rel="stylesheet" href="../../../../../ADI_Bin/css/style.css" type="text/css"/>
+        <!-- Estilo do Bootstrap -->
+        <link rel="stylesheet" href="../../../../../ADI_Bin/css/bootstrap.min.css" type="text/css"/>
+        <link rel="stylesheet" href="../../../../../ADI_Bin/css/bootstrap-select.min.css" type="text/css"/>
+        <!-- Estilo do datatable -->
+        <link rel="stylesheet" href="../../../../../ADI_Bin/DataTables/DataTables-1.10.11/css/dataTables.bootstrap.min.css" type="text/css"/>
+        
+        
+        <script>
+            var h5 =  function(script) {
+                    var tpl = "/{APPNAME}/ADI_Programacao/ADI_Bin/html5/" + script;
+                    var src = tpl.replace("{APPNAME}", location.pathname.split("/")[1]);
+                    var tag = '<' + 'scr' + 'ipt src="' + src + '"><' + '/sc' + 'ript>';
+                    document.write(tag);
+            }
+
+            h5('html5.js');
+        </script>
+        
+    </head>
+    <body>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12" >
+
+                    <!-- Modal -->
+                    <div data-backdrop="static" class="modal fade" id="myModal" role="dialog">
+                      <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div id="divCorpo"> <img id="loading" alt="Carregando" title="Carregando" src="../../../../../ADI_Bin/html5/aguarde.gif"/>  </div>
+                      </div>
+                    </div>
+                    
+                    <div data-backdrop="static" class="modal fade" id="myModalConfirm" role="dialog">
+                        <div class="modal-dialog">
+
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <label class="h3" >Atenção</label>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="h5">Já existe Empenho para Este Ano e Mês</label>
+                                    <label class="h5">Deseja Regerar o Empenho</label>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <a id="btnRegerarEmpenho" data-dismiss="modal" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-ok">Regerar Empenho</a>
+                                </div>
+                            </div>                          
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+                    
+            <div class="row">
+                <div class="col-sm-12 cabecalho" >
+                    <label class="textoCab" title="Gerar Empenho">Gerar Empenho</label>
+                </div>
+            </div>
+            <div id="conteudo">
+                <div class="row">                
+                    <div class="col-md-12">
+                        <fieldset class="fsStyle">
+                            <legend>
+                                <label class="titleFildSet">Parametrização do Empenho</label>
+                            </legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    
+                                    <label style="font-size:small">Selecione um Ano</label>
+                                    
+                                    <div class="comboSelect">
+                                        <div class="input-group">
+                                            <input tabindex="1" id="textAno" type="text" class="form-control" placeholder="Digite um Ano, ou selecione ao lado!">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul id="listaAno" class="dropdown-menu dropdown-menu-right scrollable-menu" aria-labelledby="dropdownMenu1">
+                                                    
+                                                </ul>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-sm-6">
+                                    <label style="font-size:small">Selecione um Mês</label>
+                                    
+                                    <div class="comboSelect">
+                                        <div class="input-group">
+                                            <input tabindex="2" type="text" id="textMes" class="form-control" placeholder="Digite um Mês, ou selecione ao lado!">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul id="listaMes" class="dropdown-menu dropdown-menu-right scrollable-menu" aria-labelledby="dropdownMenu1">
+                                                    
+                                                </ul>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <hr width=50%>
+                                <div class="col-sm-12">
+                                    <button tabindex="3" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-block" type="button" id="btnGerarEmp" >Empenhar</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <div class="row">                
+                    <div class="col-sm-12">
+                        <table id="tabelaDados" class="table table-striped table -bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Ano</th>
+                                    <th>Mes</th>
+                                    <th>Usuário</th>
+                                    <th>Data Geração</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <script src="../../../../../ADI_Bin/js/jquery-2.2.1.min.js"></script>
+        <script src="../../../../../ADI_Bin/js/bootstrap.min.js"></script>
+        <script src="../../../../../ADI_Bin/js/bootstrap-select.min.js"></script>
+        <script src="../../../../../ADI_Bin/js/jquery-ui-1.11.4.redmond/jquery-ui.js"></script>
+        
+        
+        <script src="../../../../../ADI_Bin/DataTables/DataTables-1.10.11/js/jquery.dataTables.min.js"></script>
+        <script src="../../../../../ADI_Bin/DataTables/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script>
+        
+        
+        <script>
+        
+        function h5root(resource) { return "/{APPNAME}/ADI_Programacao/ADI_Bin/html5/".replace("{APPNAME}", location.pathname.split("/")[1]) + resource; }    
+        
+        $(document).ready(function()
+        {
+                
+               
+            
+                $("#listaAno").on("click", "li", function(){
+
+                    var ano = $(this).find("a").html();
+                    $("#textAno").html(ano);
+                    $("#textAno").val(ano);
+                    
+                    carregaComboMes(ano);
+                    
+
+                });
+                
+                $("#textAno").on("blur", null, function(){
+                    //alert($("#textAno").val())
+                    carregaComboMes($("#textAno").val());
+                    
+                });
+                
+                $("#listaMes").on("click", "li", function(){
+
+                    var mes = $(this).find("a").html();
+                    $("#textMes").html(mes);
+                    $("#textMes").val(mes);
+                });
+                
+                
+                $("#btnRegerarEmpenho").on("click", null, function(){
+                    
+                    Empenhar();
+                    
+                });
+                
+                $("#btnGerarEmp").on("click", null, function() 
+                {
+                    //alert($("#textMes").val().toString().substr(0,2));
+                    function onsuccess(rows)
+                    {
+                        
+                        
+                        if (typeof rows == "string") 
+                        {
+                            if (rows.slice(0, 5) == "error") 
+                            {
+                                    var parts = rows.split("|");						
+                                    console.error(rows);
+                                    alert(parts[0].slice(6,100));
+                                    return;
+                            }							
+                        }
+                        var verificado = "";
+                        for (var i = 0; i < rows.length; i++) 
+                        {
+                            var row = rows[i];
+                            verificado = row.verificado
+                        }
+                        
+                        if(verificado == "1")
+                        {
+                            $("#myModal").modal("hide");
+                            
+                            $("#myModalConfirm").modal("show");
+                        }
+                        else
+                            Empenhar();
+                        
+                        
+                        
+                    }
+                    function onfail(data)
+                    {
+                        $("#myModalConfirm").modal("hide");
+                    }
+
+                    var dados = {acao:"verificarEmpenho", ano:$("#textAno").val(), mes:$("#textMes").val().toString().substr(0,2) };
+                    jQuery.ajax(
+                    {
+                        type: "GET",
+                        url: url.jsp(),
+                        data: dados,
+                        success: onsuccess,
+                        fail: onfail,
+
+                    });
+                    
+                    
+                });
+            
+            
+            function Empenhar()
+            {
+                
+                
+                function onsuccess(rows)
+                {
+                    $("#myModal").modal("hide");
+                    carregaComboAno();
+                }
+                function onfail(data)
+                {
+                    $("#myModal").modal("hide");
+                }
+
+                var dados = {acao:"gerarEmpenho", ano:$("#textAno").val(), mes:$("#textMes").val().toString().substr(0,2) };
+                jQuery.ajax(
+                {
+                    type: "GET",
+                    url: url.jsp(),
+                    data: dados,
+                    success: onsuccess,
+                    fail: onfail,
+
+                });
+            }
+            
+            
+            function carregaComboAno ()
+            {
+                function onsuccess(objeto)            
+                {
+                    //debugger;
+                    var rows = null;
+                    var lista = null;
+                    rows = JSON.parse(objeto.ano);
+                    lista = JSON.parse(objeto.lista);
+                    
+                    if (typeof rows == "string") 
+                    {
+                        if (rows.slice(0, 5) == "error") 
+                        {
+                                var parts = rows.split("|");						
+                                console.error(rows);
+                                alert(parts[0].slice(6,100));
+                                return;
+                        }							
+                    }
+                    var opcoes = "";
+                    var compAutoComplet = new Array;
+                    //alert(objeto.lista);
+                    for (var i = 0; i < rows.length; i++) 
+                    {
+                        var row = rows[i];
+                        alert
+                        
+                        opcoes += "<li class='lista'><a href='#'>"+row.ano+"</a></li>";
+                        
+                        if(i==5)
+                            opcoes += "<li class='divider'></li>";
+                        
+                        compAutoComplet[i]=""+row.ano;
+                    }
+                    $("#listaAno").html(opcoes);
+                    $( "#textAno" ).autocomplete({
+                        source: compAutoComplet
+                    });                    
+                    
+                    carregaLista( lista );
+                }
+                function onfail(data)
+                {
+                    /*obj.html(data);*/
+                }
+                
+                var dados = {acao:"carregarComboAno"};
+                jQuery.ajax(
+                {
+                    type: "GET",
+                    url: url.jsp(),
+                    data: dados,
+                    async: false,
+                    success: onsuccess,
+                    fail: onfail,
+                    
+                });	
+        
+
+
+            }
+            
+            
+            function carregaComboMes(mes)
+            {
+                function onsuccess(rows)
+                {
+                    if (typeof rows == "string") 
+                    {
+                        if (rows.slice(0, 5) == "error") 
+                        {
+                                var parts = rows.split("|");						
+                                console.error(rows);
+                                alert(parts[0].slice(6,100));
+                                return;
+                        }							
+                    }
+                    var opcoes = "";
+                    var compAutoComplet = new Array;
+                    for (var i = 0; i < rows.length; i++) 
+                    {
+                        var row = rows[i];
+                        
+                        opcoes += "<li class='lista'><a href='#'>"+row.mes+"</a><INPUT TYPE='hidden' id='codMes' value='"+row.codMes+"'></li>";
+                        
+                        if(i==5)
+                            opcoes += "<li class='divider'></li>";
+                        
+                        compAutoComplet[i]=""+row.mes;
+                    }
+                    $("#listaMes").html(opcoes);
+                    $( "#textMes" ).autocomplete({
+                        source: compAutoComplet
+                    });                    
+                    
+                    //capturaEvento();
+                }
+                function onfail(data)
+                {
+                    /*obj.html(data);*/
+                }
+                
+                var dados = {acao:"carregarComboMes", anoCarregarMes:mes };
+                jQuery.ajax(
+                {
+                    type: "GET",
+                    url: url.jsp(),
+                    data: dados,
+                    async: false,
+                    success: onsuccess,
+                    fail: onfail
+                });	
+            }
+            
+            var table
+            function carregaLista(lista)
+            {    
+                //debugger;
+                
+                table =  $('#tabelaDados').DataTable({
+                        "scrollY":        "40vh",
+                        "scrollCollapse": true,
+                        "destroy": true,
+
+                        "language": {"url": "../../../../../ADI_Bin/DataTables/datatables.Portuguese.txt"},
+                        "lengthMenu": [[5, 25, 50, 500, -1], [5, 25, 50, 500, "Todos"]],
+
+                        //Escoder Colunas
+                        /*
+                        "columnDefs": [
+                            {
+                                "targets": [ 0 ],
+                                "visible": false,
+                                "searchable": false
+                            }
+                        ],*/
+                        
+                        //"scrollCollapse": true,
+
+                        "data":lista,
+                        "columns": [
+                            {
+                               "className":      'details-control',
+                               "orderable":      false,
+                               "data":           null,
+                               "defaultContent": ''
+                            },
+                            { "data": "ano" },
+                            { "data": "mes" },
+                            { "data": "codusuarioinclusao" },
+                            { "data": "dthorainclusao" },
+                        ]
+                        
+
+                    });
+            }
+            
+            // Add event listener for opening and closing details
+            $('#tabelaDados tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row( tr );
+
+                if ( row.child.isShown() ) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child( format(row.data()) ).show();
+                    tr.addClass('shown');
+                }
+            } );
+
+            /* Formatting function for row details - modify as you need */
+            function format ( dados ) {
+                // `d` is the original data object for the row
+                return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                    '<tr>'+
+                        '<td>Quantidade de Folhas Calculadas:</td>'+
+                        '<td>'+dados.qtefolhas+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<td>Quantidade de Fichas do Empenho:</td>'+
+                        '<td>'+dados.qteficha+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<td>Quantidade de Funcionários:</td>'+
+                        '<td>'+dados.qtefunc+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<td>Total de Proventos:</td>'+
+                        '<td>'+dados.totalproventos+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<td>Total de Descontos:</td>'+
+                        '<td>'+dados.totaldesconto+'</td>'+
+                    '</tr>'+
+                '</table>';
+            }
+
+            carregaComboAno();
+
+            
+            
+            
+            
+         });
+         
+            
+        </script>
+    </body>
+</html>

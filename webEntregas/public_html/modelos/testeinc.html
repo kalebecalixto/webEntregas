@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<div class="input-group" style="padding-bottom: 20px">
+    <span class="input-group-addon" id="basic-addon1">Nome do Relatório</span>
+    <input type="text" class="form-control" placeholder="Ex: Cadastro de Servidores" >
+</div>
+
+<div class="row">
+    <div class="col-sm-12" >
+        <fieldset class="fsStyle" style="padding-top: 20px">
+            <legend>
+                <label class="titleFildSet">Configuração da Página</label>
+            </legend>
+            <div class="row">
+                <div class="col-sm-5" >
+                    <div class="input-group" style="padding-bottom: 20px; width: 50%" >
+                        <input type="text" id="texTamanho"  class="form-control" placeholder="Ex: Tamanho A4" >
+                        <div class="comboSelect">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tamanhos <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Tamanho A3</a></li>
+                                  <li><a href="#">Tamanho A4</a></li>
+                                  <li><a href="#">Tamanho A5</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-sm-7" >
+                    <div class="btn-group " role="group" >
+                        <a href="#" class="btn btn-success">Retrato</a>
+                        <a href="#" class="btn btn-default">Paisagem</a>
+                        <a href="#" class="btn btn-default">Retrato-Invertido</a>
+                        <a href="#" class="btn btn-default">Paisagem-Invertido</a>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <fieldset style="padding-top: 20px">
+                        <legend>
+                            <label class="titleFildSet">Margens</label>
+                        </legend>
+                        <div class="row">
+                            <div class="col-sm-6" >
+                                <div class="input-group" style="padding-bottom: 20px">
+                                    <span class="input-group-addon" id="basic-addon1">Superior</span>
+                                    <input type="text" class="form-control" placeholder="Ex: Cadastro de Servidores" >
+                                    <span class="input-group-addon" id="basic-addon1">(mm)</span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6" >
+                                <div class="input-group" style="padding-bottom: 20px">
+                                    <span class="input-group-addon" id="basic-addon1">Inferior</span>
+                                    <input type="text" class="form-control" placeholder="Ex: Cadastro de Servidores" >
+                                    <span class="input-group-addon" id="basic-addon1">(mm)</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6" >
+                                <div class="input-group" style="padding-bottom: 20px">
+                                    <span class="input-group-addon" id="basic-addon1">Esquerda</span>
+                                    <input type="text" class="form-control" placeholder="Ex: Cadastro de Servidores" >
+                                    <span class="input-group-addon" id="basic-addon1">(mm)</span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6" >
+                                <div class="input-group" style="padding-bottom: 20px">
+                                    <span class="input-group-addon" id="basic-addon1">Direita</span>
+                                    <input type="text" class="form-control" placeholder="Ex: Cadastro de Servidores" >
+                                    <span class="input-group-addon" id="basic-addon1">(mm)</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+            
+        $( "#texTamanho" ).autocomplete({
+            source: ["Tamanho A4", "Tamanho A3", "Tamanho A5"]
+        });
+    });
+</script>
+

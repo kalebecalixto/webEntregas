@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Folha de Estilo Local -->
+        <link rel="stylesheet" href="../../ADI_Bin/css/style.css" type="text/css"/>
+        <!-- Estilo do Bootstrap -->
+        <link rel="stylesheet" href="../../ADI_Bin/css/bootstrap.min.css" type="text/css"/>
+        <link rel="stylesheet" href="../../ADI_Bin/css/bootstrap-select.min.css" type="text/css"/>
+        <!-- Estilo do datatable -->
+        <link rel="stylesheet" href="../../ADI_Bin/DataTables/DataTables-1.10.11/css/dataTables.bootstrap.min.css" type="text/css"/>
+        
+        
+        <script>
+            var h5 =  function(script) {
+                    var tpl = "/{APPNAME}/ADI_Programacao/ADI_Bin/html5/" + script;
+                    var src = tpl.replace("{APPNAME}", location.pathname.split("/")[1]);
+                    var tag = '<' + 'scr' + 'ipt src="' + src + '"><' + '/sc' + 'ript>';
+                    document.write(tag);
+            }
+
+            h5('html5.js');
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12" >
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="nav nav-tabs textformat_tab">
+                                <li class="active"><a data-toggle="tab" href="#p01">01 - Propriedades do Relatório</a></li>
+                                <li><a data-toggle="tab" href="#p02">02 - Extração de Dados</a></li>
+                                <li><a data-toggle="tab" href="#p03">03 - Condições (Filtros)</a></li>
+                                <li><a data-toggle="tab" href="#p04">04 - Gerar Relatório</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="p01" class="tab-pane fade in active" style="padding-top:20px">
+                                    <div id="conteudoP01"></div>
+                                </div>
+                                <div id="p02" class="tab-pane fade">
+                                  <h3>Menu 1</h3>
+                                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                                <div id="p03" class="tab-pane fade">
+                                  <h3>Menu 2</h3>
+                                  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                                </div>
+                                <div id="p04" class="tab-pane fade">
+                                  <h3>Menu 3</h3>
+                                  <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <script src="../../ADI_Bin/js/jquery-2.2.1.min.js"></script>
+        <script src="../../ADI_Bin/js/bootstrap.min.js"></script>
+        <script src="../../ADI_Bin/js/bootstrap-select.min.js"></script>
+        <script src="../../ADI_Bin/js/jquery-ui-1.11.4.redmond/jquery-ui.js"></script>
+        
+        
+        <script src="../../ADI_Bin/DataTables/DataTables-1.10.11/js/jquery.dataTables.min.js"></script>
+        <script src="../../ADI_Bin/DataTables/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script>
+        
+
+        
+        
+        <script>
+        
+        function h5root(resource) { return "/{APPNAME}/ADI_Programacao/ADI_Bin/html5/".replace("{APPNAME}", location.pathname.split("/")[1]) + resource; }    
+        
+        $(document).ready(function(){
+            
+            $("#conteudoP01").load('testeinc.html');
+            
+        });
+         
+            
+        </script>
+    
+    
+    
+    </body>
+</html>
