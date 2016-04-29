@@ -1,17 +1,117 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Autor: Kalebe Calixto
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Folha de Estilo Local -->
+        <link rel="stylesheet" href="css/style.css" type="text/css"/>
+        <!-- Estilo do Bootstrap -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+        <!-- <link rel="stylesheet" href="css/bootstrap-select.min.css" type="text/css"/> -->
+        <!-- Estilo do datatable -->
+        <!-- <link rel="stylesheet" href="DataTables/DataTables-1.10.11/css/dataTables.bootstrap.min.css" type="text/css"/> -->
     </head>
-    <body>
-        <div>TODO write content</div>
-        teste
+    <body >
+        <!-- Implementa a barra de navegação --> 
+        <nav class="navbar navbar-default" style="margin-bottom: 0px">
+            <div class="container-fluid" >
+                    <!-- Implementa uma parte para a logo do sistema --> 
+                    <div class="navbar-header" >
+                        <!-- Implementa Botao que aparece somente se o tamanho da tela for pequeno e implementa os links dentro dele  --> 
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuTela">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" style="line-height: 5px" href="#"> <div id="logo" style="text-align: center">CLICK ENTREGAS <p class="h6">Clicou Pediu Chegou</div></a>
+                    </div>
+                    <!-- Implementa Funcao que determina se os menus irao aparecer no botao acima implementados ou na tela (depende tamanho da tela)  -->
+                    <div class="collapse navbar-collapse" id="menuTela" >
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="#">Principal</a></li>
+                            <li ><a href="#">Ajuda</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Cadastra-se</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Entrar</a></li>   
+                        </ul>
+                    </div>
+            </div>
+                
+        </nav>
+        
+        
+        
+        <div class="container-fluid" style=" height:93%;  width: 100%;">
+            
+            
+            <div class="row " style=" height: 25%; position: relative; width: 100%">
+                <div class="col-sm-12">
+                    1
+                </div>
+            </div>
+            <div class="row " style=" height: 25%; position: relative; width: 100%">
+                <div class="col-sm-12">
+                    2
+                </div>
+            </div>
+            <div class="row " style=" height: 25%; position: relative; width: 100%">
+                <div class="col-sm-12">
+                    3
+                </div>
+            </div>
+            <div class="row " style=" height: 25%; background: blue; position: relative; width: 100%">
+                <div class="col-sm-3">
+                    
+                </div>
+                <div class="col-sm-6" >
+                    
+                    <div style="display: inline-block"></div>
+                    <div style="display: inline-block"></div>
+                    <div style="display: inline-block"></div>
+                    
+                </div>
+                <div class="col-sm-3">
+                    
+                </div>
+            </div>
+            
+            <div id="pesquisa" class="divCentral transbox " > </div>
+               
+            
+                
+        </div>
+        
+        
+        
+        
+        
+        <script src="js/jquery-2.2.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        
+        <!-- <script src="../js/bootstrap-select.min.js"></script> -->
+        <!-- <script src="../js/jquery-ui-1.11.4.redmond/jquery-ui.js"></script> -->
+        
+        
+        <!-- <script src="../DataTables/DataTables-1.10.11/js/jquery.dataTables.min.js"></script> -->
+        <!-- <script src="../DataTables/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script> -->
+        
+
+        
+        
+        <script>
+        
+        $(document).ready(function(){
+            
+            
+            
+        });
+         
+            
+        </script>
+    
     </body>
 </html>

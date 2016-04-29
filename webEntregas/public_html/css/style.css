@@ -154,3 +154,34 @@ tr.shown td.details-control {
 .textForm{
     font-size: small;
 }
+
+.divCentral {
+ 
+    width:500px; /* Tamanho da Largura da Div */
+    height:200px; /* Tamanho da Altura da Div */
+    position:absolute; 
+    top:50%; 
+    margin-top:-100px; /* ou seja ele pega 50% da altura tela e sobe metade do valor da altura no caso 100 */
+    left:50%;
+    margin-left:-250px; /* ou seja ele pega 50% da largura tela e diminui  metade do valor da largura no caso 250 */
+    background-color:grey;
+    border-radius: 0.5em;
+}
+
+div.transbox {
+  //border: 1px solid black;
+  opacity: 0.3;
+  filter: alpha(opacity=30); /* For IE8 and earlier */
+}
+
+.divCirculo {
+    width:120px; /* Tamanho da Largura da Div */
+    height:110px;
+    background: green;
+    border-radius: 50%;
+        
+}
+
+.listaHorizontal{
+    display: inline;
+}
