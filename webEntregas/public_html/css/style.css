@@ -177,7 +177,7 @@ div.transbox {
 .divCirculo {
     width:120px; /* Tamanho da Largura da Div */
     height:110px;
-    background: green;
+    background: grey;
     border-radius: 50%;
         
 }
