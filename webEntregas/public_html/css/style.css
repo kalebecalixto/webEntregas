@@ -106,32 +106,10 @@ border-bottom: 0px;
     overflow-x: hidden;
 }
 
-@media screen and (max-width: 768px) 
-{
-    .textoCab
-    {
-      font-size: 15px;
-    }
-    
-    .titleFildSet 
-    {
-      color: inherit;
-      color: #888888;
-      font-size: x-small;
-      font-weight: bold;
-      padding-left: 5px;
-      padding-right: 5px;
-    }
 
-    .textformat_tab{
-    font-size: x-small;
-    font-weight: bold;
-    padding-left: 5px;
-    padding-right: 5px;
-}
 
     
-}
+
 
 .centered {
     margin: 0 auto !important;
@@ -170,13 +148,14 @@ tr.shown td.details-control {
 
 div.transbox {
   //border: 1px solid black;
-  opacity: 0.3;
-  filter: alpha(opacity=30); /* For IE8 and earlier */
+  //opacity: 0.3;
+  //filter: alpha(opacity=30); /* For IE8 and earlier */
+  background: rgba(0,0,0,0.2)
 }
 
 .divCirculo {
-    width:120px; /* Tamanho da Largura da Div */
-    height:110px;
+    width:110px; /* Tamanho da Largura da Div */
+    height:100px;
     background: grey;
     border-radius: 50%;
         
@@ -184,4 +163,55 @@ div.transbox {
 
 .listaHorizontal{
     display: inline;
+}
+
+
+@media screen and (max-width: 512px) 
+{
+    .textoCab
+    {
+      font-size: 15px;
+    }
+    
+    .titleFildSet 
+    {
+      color: inherit;
+      color: #888888;
+      font-size: x-small;
+      font-weight: bold;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    .textformat_tab{
+    font-size: x-small;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    }
+    
+    .divCirculo {
+    width:90px; /* Tamanho da Largura da Div */
+    height:82px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 50%;
+        
+    }
+    
+    .divCentral {
+ 
+    width:350px; /* Tamanho da Largura da Div */
+    height:140px; /* Tamanho da Altura da Div */
+    position:absolute; 
+    top:50%; 
+    margin-top:-70px; /* ou seja ele pega 50% da altura tela e sobe metade do valor da altura no caso 100 */
+    left:50%;
+    margin-left:-175px; /* ou seja ele pega 50% da largura tela e diminui  metade do valor da largura no caso 250 */
+    background-color:grey;
+    border-radius: 0.5em;
+    }
+    
+    .labTel{
+        font-size: small;
+    }
 }
