@@ -48,7 +48,7 @@ Autor: Kalebe Calixto
         <div class="container-fluid" style=" height:90%;  width: 100%;">
             
             
-            <div id="pesquisa" class="divCentral transbox" style="display: table" >
+            <div id="pesquisa" class="divCentral transbox" style="display:none" >
                 <div id="celTab" style="display: table-cell; vertical-align: middle" >
                     <div style="padding-bottom: 2em; width: 80%; margin: auto; text-align: center">
                         <label class="labTel" style="width: 80%; margin: auto">Encontre a melhor opção para sua compra</label>
@@ -58,10 +58,26 @@ Autor: Kalebe Calixto
                         <input type="text" class="form-control" id="exampleInputAmount" placeholder="Digite o Cep de Entrega">
                     </div>
                     <div class="input-group" style="padding-top: 10px; width: 80%; margin: auto">
+                        <button tabindex="3" class="btn btn-primary btn-block" type="button" id="btnGerarEmps" >Buscar Distribuidoras</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="pesquisaComp" class="divCentral transbox" style="display: table;  " >
+                <div id="celTab" style="display: table-cell; vertical-align: middle" >
+                    <div style="padding-bottom: 2em; width: 80%; margin: auto; text-align: center">
+                        <label class="labTel" style="width: 80%; margin: auto">Encontre a melhor opção para sua compra</label>
+                    </div>
+                    <div class="input-group" style="width: 80%; margin: auto">
+                        <div class="input-group-addon">CEP</div>
+                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="teste">
+                    </div>
+                    <div class="input-group" style="padding-top: 10px; width: 80%; margin: auto">
                         <button tabindex="3" class="btn btn-primary btn-block" type="button" id="btnGerarEmp" >Buscar Distribuidoras</button>
                     </div>
                 </div>
             </div>
+            
         </div>
         
         
@@ -77,7 +93,7 @@ Autor: Kalebe Calixto
         
         <!-- <script src="../DataTables/DataTables-1.10.11/js/jquery.dataTables.min.js"></script> -->
         <!-- <script src="../DataTables/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script> -->
-        
+    
 
         
         
@@ -85,6 +101,15 @@ Autor: Kalebe Calixto
         
         $(document).ready(function(){
             
+            $("#btnGerarEmp").on("click", null, function(e){
+                e.preventDefault();
+                $("#pesquisaComp").animate({opacity: 0.01, left: "100"}, 1000).fadeOut(1000);
+                console.log("teste");
+                
+                $("#pesquisa").delay(1200).fadeIn(1000).css("display", "table");
+                console.log("teste");
+                
+            });
             
             
         });
