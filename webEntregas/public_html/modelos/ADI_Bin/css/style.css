@@ -1,0 +1,315 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22/02/2016, 11:42:05
+    Author     : kalebecalixto
+*/
+/*
+ * style.css 
+ */
+.teste .container
+{
+    border: 1px solid red;
+    height: 100%;
+}
+.teste .row 
+{
+    margin-bottom: 2px;
+    margin-top: 2px;
+    border: 1px solid blue;
+}
+.teste [class*="col-"]
+{
+  border: 1px solid green;
+  text-align: center;
+      
+  
+}
+
+
+header, footer 
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: red;
+    text-align: center;
+}
+html, body 
+{ 
+    margin:0; height: 100%;
+}
+.titNegrito
+{
+    font-weight: bold;
+    font-size: small;
+}
+.cabecalho
+{
+    text-align: center;
+    border-radius: 3px; 
+    padding-top: 5px;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cfe7fa+0,6393c1+100;Grey+Blue+3D */
+background: #cfe7fa; /* Old browsers */
+background: -moz-linear-gradient(top, #cfe7fa 0%, #6393c1 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #cfe7fa 0%,#6393c1 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #cfe7fa 0%,#6393c1 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe7fa', endColorstr='#6393c1',GradientType=0 ); /* IE6-9 */
+}
+.textoCab
+{
+    font-size: 15px;  
+    font-family: sans-serif;
+}
+.container
+{
+    height: 100%;
+}
+#conteudo
+{
+    height: 100%;
+    padding-top: 20px;
+}
+
+.conteudo
+{
+    height: 100%;
+    padding-top: 20px;
+}
+
+.titleFildSet 
+{
+  color: inherit;
+  color: #888888;
+  font-size: small;
+  font-weight: bold;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+fieldset.fsStyle {
+font-family: Verdana, Arial, sans-serif;
+font-weight: normal;
+border: 1px solid #999999;
+padding: 4px;
+margin: 5px;
+}
+
+legend 
+{
+width: auto;
+border-bottom: 0px;
+}
+.comboSelect
+{
+    width: 70%;
+    position: relative;
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 768px) 
+{
+    .textoCab
+    {
+      font-size: 15px;
+    }
+    
+    .titleFildSet 
+    {
+      color: inherit;
+      color: #888888;
+      font-size: x-small;
+      font-weight: bold;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    .textformat_tab{
+    font-size: x-small;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    }
+    .divCentral {
+ 
+    width:350px; /* Tamanho da Largura da Div */
+    height:140px; /* Tamanho da Altura da Div */
+    position:absolute; 
+    top:50%; 
+    margin-top:-70px; /* ou seja ele pega 50% da altura tela e sobe metade do valor da altura no caso 100 */
+    left:50%;
+    margin-left:-175px; /* ou seja ele pega 50% da largura tela e diminui  metade do valor da largura no caso 250 */
+    background-color:grey;
+    border-radius: 0.5em;
+    }
+    
+    .lista{
+        font-size: xx-small;
+    }
+    
+    
+    
+}
+
+.centered {
+    margin: 0 auto !important;
+    float: none !important;
+}
+
+td.details-control {
+    background: url('../DataTables/DataTables-1.10.12/images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../DataTables/DataTables-1.10.12/images/details_close.png') no-repeat center center;
+}
+.textformat_tab{
+    font-size: small;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.textForm{
+    font-size: small;
+}
+
+.img
+{
+ width: 100%;
+ height: 100%;
+}
+
+
+.tabdados .img 
+{
+ width: 70%;
+ height: 70%;
+}
+
+.scrollable-container {
+    height: auto;
+    max-height: 650px;
+    overflow-x: hidden;
+}
+
+.divBtnPesquisar{
+    width:80px; /* Tamanho da Largura da Div */
+    height:80px; /* Tamanho da Altura da Div */
+    position:absolute; 
+    top:10%; 
+    margin-top:-25px; /* ou seja ele pega 50% da altura tela e sobe metade do valor da altura no caso 100 */
+    left:2.3%;
+     /* ou seja ele pega 50% da largura tela e diminui  metade do valor da largura no caso 250 */
+    border-radius: 0.5em;
+    
+    //background: rgba(255,0,0,0.5);
+}
+
+.divCentral {
+ 
+    width:500px; /* Tamanho da Largura da Div */
+    height:auto; /* Tamanho da Altura da Div */
+    position:absolute; 
+    top:50%; 
+    margin-top:-100px; /* ou seja ele pega 50% da altura tela e sobe metade do valor da altura no caso 100 */
+    left:50%;
+    margin-left:-250px; /* ou seja ele pega 50% da largura tela e diminui  metade do valor da largura no caso 250 */
+    background-color:grey;
+    border-radius: 0.5em;
+}
+
+div.transbox {
+  //border: 1px solid black;
+  //opacity: 0.3;
+  //filter: alpha(opacity=30); /* For IE8 and earlier */
+  background: rgba(0,0,0,0.5)
+}
+
+
+
+li.ui-menu-item{
+    font-size: x-small;
+}
+
+div #mapGoogle{
+    height: 100%;
+    width: 100%;
+    
+    background: gainsboro; 
+    
+}
+
+.gm-style-iw {
+	width: 350px !important;
+	top: 15px !important;
+	left: 0px !important;
+	background-color: #fff;
+	box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+	border: 1px solid rgba(72, 181, 233, 0.6);
+	border-radius: 2px 2px 10px 10px;
+}
+#iw-container {
+	margin-bottom: 10px;
+}
+#iw-container .iw-titulo{
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 22px;
+	font-weight: 400;
+	padding: 10px;
+	background-color: #48b5e9;
+	color: white;
+	margin: 0;
+	border-radius: 2px 2px 0 0;
+}
+#iw-container .iw-conteudo{
+	font-size: 13px;
+	line-height: 18px;
+	font-weight: 400;
+	margin-right: 1px;
+	padding: 15px 5px 20px 15px;
+	max-height: 140px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.iw-conteudo img {
+	float: right;
+	margin: 0 5px 5px 10px;	
+}
+.iw-subTitulo{
+	font-size: 16px;
+	font-weight: 700;
+	padding: 5px 0;
+}
+.iw-bottom-gradient {
+	position: absolute;
+	width: 326px;
+	height: 25px;
+	bottom: 10px;
+	right: 18px;
+	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+	background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+	background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+	background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+}
+.labTel{
+    color: white;
+    font-size: medium;
+}
+
+.iw-bottom-detalhes{
+    padding: 5px;
+    padding-top: 10px;
+}
+
+
+#tabelaFuncionario td:nth-child(7)
+{
+ text-align:right !important;
+ //color: red  !important;
+}

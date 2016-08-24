@@ -1,0 +1,65 @@
+.fscombo, .fscombo, .fscombo_button, .fscombo_option, .fscombo_option_highlight, .fscombo_options, .fscombo_text, .fscombo_text_highlight
+{
+	font-family: Verdana;
+	font-size: 10px;
+	color: #000000;
+}
+
+.fscombo
+{
+	border: 1px solid #000000;
+}
+
+.fscombo_button, .fscombo_button_highlight
+{
+	border: 1px solid black;
+	width: 20px;
+	text-align: center;
+}
+
+.fscombo_text, .fscombo_text_highlight
+{
+	border: 1px solid #ffffff;
+	width: 100%;
+}
+
+.fscombo_text
+{
+}
+
+.fscombo_text_highlight
+{
+}
+
+.fscombo_button
+{
+	background-color: #f7f7f7;
+}
+
+.fscombo_button_highlight
+{
+	background-color: #6699ff;
+}
+
+.fscombo_option, .fscombo_option_highlight
+{
+	padding: 3px;
+}
+
+.fscombo_option
+{
+	background-color: #f7f7f7;
+}
+
+.fscombo_option_highlight
+{
+	background-color: #6699ff;
+}
+
+.fscombo_options
+{
+	margin-top: 1px;
+	border: 1px solid #000000;
+	max-height: 200px;
+	overflow: auto;
+}

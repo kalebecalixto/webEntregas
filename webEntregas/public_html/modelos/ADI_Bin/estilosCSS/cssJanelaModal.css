@@ -1,0 +1,20 @@
+///CSS usuado para definir padrão de layout para janelas modais
+
+body {
+font-family:verdana;
+font-size:15px;
+}
+
+a {color:#333; text-decoration:none}
+a:hover {color:#ccc; text-decoration:none}
+
+#mask {
+  position:absolute;
+  left:0;
+  top:0;
+  background-color: rgba(0,0,0,.7);
+  display:none;
+}
+  
+
+.close{display:block; text-align:right;}

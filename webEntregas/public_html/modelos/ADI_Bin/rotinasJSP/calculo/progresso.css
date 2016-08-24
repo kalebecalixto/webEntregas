@@ -1,0 +1,56 @@
+table.barra_progresso
+{
+	border: 1px solid #5A6994;
+}
+td.barra_progresso
+{
+	border: 1px solid #5A6994;
+}
+
+.perc_b_prog
+{
+	font-family: Courier New, Courier, mono;
+	font-size: 10px;
+	color: #5A6994;
+}
+
+.font_b_prog
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #5A6994;
+}
+
+.font_det_b_prog
+{
+	color: #5A6994;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+.font_tit_calc
+{
+	color: #5A6994;
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+.linha_b_prog
+{
+	border-top: 0px solid transparent;
+	border-left: 0px solid transparent;
+	border-right: 0px solid transparent;
+	border-bottom: 1px solid #5A6994;
+}
+
+.botoes_calc
+{
+	color: #5A6994;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	border: 1px solid #5A6994;
+	background-color: white;
+	width: 70px;
+}

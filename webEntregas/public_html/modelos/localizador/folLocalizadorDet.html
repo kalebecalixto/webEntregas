@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Folha de Estilo Local -->
+    <link rel="stylesheet" href="../../../../ADI_Bin/css/style.css" type="text/css"/>
+    <!-- Estilo do Bootstrap -->
+    <link rel="stylesheet" href="../../../../ADI_Bin/css/bootstrap.min.css" type="text/css"/>
+    <!-- <link rel="stylesheet" href="../../../../ADI_Bin/css/bootstrap-select.min.css" type="text/css"/> -->
+    <!-- Estilo do datatable -->
+    
+    <link rel="stylesheet" href="../../../../ADI_Bin/DataTables/DataTables-1.10.12/css/dataTables.bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../../ADI_Bin/DataTables/Buttons-1.2.1/css/buttons.dataTables.min.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../../ADI_Bin/DataTables/Buttons-1.2.1/css/buttons.bootstrap.min.css" type="text/css"/>
+
+    <script>
+        var h5 =  function(script) {
+                var tpl = "/{APPNAME}/ADI_Programacao/ADI_Bin/html5/" + script;
+                var src = tpl.replace("{APPNAME}", location.pathname.split("/")[1]);
+                var tag = '<' + 'scr' + 'ipt src="' + src + '"><' + '/sc' + 'ript>';
+                document.write(tag);
+        }
+
+        h5('html5.js');
+
+
+    </script>
+    </head>
+    <body>
+
+
+        <div class="container" style="position: absolute; height: 100%; width: 100%;  padding-top: 10px; box-sizing: border-box ">
+
+            <div class="row">
+                <div class="col-sm-12" >
+
+                    <!-- Modal -->
+                    <div data-backdrop="static" class="modal fade" id="myModal" role="dialog">
+                      <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div id="divCorpo"> <img id="loading" alt="Carregando" title="Carregando" src="../../../../ADI_Bin/html5/aguarde.gif"/>  </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+            <div >
+                <div class="panel panel-default" style="text-align: center; background:rgba(220,220,220,220.5)">
+                    <label id="lbEstrut" class="textoCab"> Estrutura:</label>
+                    <br>
+                    <label id="lbLocalCab" class="textoCab"> Local:</label>
+                </div>
+                
+                <div class="panel panel-default ">
+                    <div class="panel-body " > 
+                        <ul id="painelTab" class="nav nav-tabs textformat_tab">
+                            <li id="tab01" class="active"><a data-toggle="tab" href="#p01">01 - Consultas</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tab-content " style="padding-left:1%; padding-right: 1%;">
+                        <div id="p01" class="tab-pane fade in active" style=" padding-top:20px; ">
+                            <div class="row"  >
+                                <div class="col-sm-4"  >
+                                    <div class="panel panel-default" style="margin-bottom:5px;  text-align: center; background:rgba(220,220,220,220.5)">
+                                        <label id="lbLocais" class="textoCab">Locais</label>
+                                    </div>
+                                    
+                                    <div id="divConteudoLocal" style="height: auto; overflow-x: hidden; max-height:95%; position: relative"></div>
+                                    
+                                    
+                                </div>
+                                <div class="col-sm-8" style="" >
+                                    <div class="panel panel-default" style="margin-bottom:5px; text-align: center; background:rgba(220,220,220,220.5)">
+                                        <label id="lbConsultaR" class="textoCab">Consulta Rápida</label>
+                                    </div>
+                                    
+                                    <div class="row" style="height: auto; position: relative; overflow-x: hidden; max-height: 45% ">
+                                        <div class="col-sm-12">
+                                    
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="panel panel-default">
+
+                                                        <table id="tabelaDadosAfastamento" class="table table-striped table -bordered">
+
+                                                            <thead>
+                                                                <tr>
+                                                                    <th colspan="4" style="background:gainsboro; text-align: center"><label>Afastados do Dia</label></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th>Funcionário</th>
+                                                                    <th>Tipo Afast.</th>
+                                                                    <th>Rel. Func.</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody >
+
+
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="panel panel-default">
+
+                                                        <table id="tabelaDadosFerias" class="table table-striped table -bordered">
+
+                                                            <thead>
+                                                                <tr>
+                                                                    <th colspan="6" style="background:gainsboro; text-align: center"><label>Funcionários de Férias</label></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th>Funcionário</th>
+                                                                    <th>Rel. Func.</th>
+                                                                    <th>Tipo Férias</th>
+                                                                    <th>Dt. Inicio</th>
+                                                                    <th>Dt. Fim</th>
+                                                                    
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody >
+
+
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="panel panel-default" style=" margin-top: 20px; margin-bottom:5px; text-align: center; background:rgba(220,220,220,220.5)">
+                                        <label id="lbConsulta" class="textoCab">Consultas</label>
+                                    </div>
+
+                                    <div class="row" style="height: 40%; position: relative; overflow-x: hidden; max-height: 40% ">
+                                        <div class="col-sm-4" >
+                                            <img src="../../../../ADI_Bin/imagens/afastamento.png" style="margin-left: 25%; width:100px; height:100px">
+                                            <div ><button class="btn btn-primary btn-block" type="button" id="btnAfastamento"  >Afastamento</button></div>
+                                        </div>
+                                        <div class="col-sm-4" >
+                                            <img src="../../../../ADI_Bin/imagens/ferias.png"  style="margin-left: 25%; width:100px; height:100px">
+                                            <div ><button class="btn btn-primary btn-block" type="button" id="btnFerias"  >Férias</button></div>
+                                        </div>
+                                        <div class="col-sm-4" >
+                                            <div class="centered" >
+                                            <img src="../../../../ADI_Bin/imagens/funcionario.png"  style="margin-left: 25%; width:100px; height:100px">
+                                            <div ><button class="btn btn-primary btn-block" type="button" id="btnFunc"  >Funcionários</button></div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="p02" class="tab-pane fade" >
+                            <div class="row"  >
+                                <div class="col-sm-12">
+                                    <table id="tabelaAfastamento" class="table table-striped table-bordered"> 
+                                        <thead>
+                                            <tr>
+                                                <th colspan="8" style="background:gainsboro; text-align: center"><label>Afastamentos Servidor</label></th>
+                                            </tr>
+                                            <tr>
+                                                <th>Funcionário</th>
+                                                <th>Matrícula</th>
+                                                <th>Relação Funcional</th>
+                                                <th>Cod. Afast</th>
+                                                <th>Tipo Afastamento</th>
+                                                <th>Inicio</th>
+                                                <th>Fim</th>
+                                                <th>Qte Dias</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                            
+
+                        </div>
+                        
+                        <div id="p03" class="tab-pane fade" >
+                            <div class="row"  >
+                                <div class="col-sm-12">
+                                    <table id="tabelaFerias" class="table table-striped table-bordered"> 
+                                        <thead>
+                                            <tr>
+                                                <th colspan="8" style="background:gainsboro; text-align: center"><label>Férias do Servidor</label></th>
+                                            </tr>
+                                            <tr>
+                                                <th>Funcionário</th>
+                                                <th>Matrícula</th>
+                                                <th>Relação Funcional</th>
+                                                <th>Tipo de Férias</th>
+                                                <th>Período Aquisitivo</th>
+                                                <th>Período de Gozo</th>
+                                                <th>Confirmado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                        <div id="p04" class="tab-pane fade" >
+                            <div class="row"  >
+                                <div class="col-sm-12">
+                                    <table id="tabelaFuncionario" class="table table-striped table-bordered"> 
+                                        <thead>
+                                            <tr>
+                                                <th colspan="8" style="background:gainsboro; text-align: center"><label>Férias do Servidor</label></th>
+                                            </tr>
+                                            <tr>
+                                                <th>Funcionário</th>
+                                                <th>Matrícula</th>
+                                                <th>Rel Func</th>
+                                                <th>Situac Func</th>
+                                                <th>Cargo</th>
+                                                <th>Admissão</th>
+                                                <th>(R$) Salario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                
+            </div>
+
+            
+
+                    
+
+        </div>
+
+
+        <script src="../../../../ADI_Bin/js/jquery-2.2.3.min.js"></script>
+        <script src="../../../../ADI_Bin/js/bootstrap.min.js"></script>
+        <script src="../../../../ADI_Bin/js/bootstrap-select.min.js"></script>
+
+        <script src="../../../../ADI_Bin/html5/url.js"></script>
+        <script src="../../../../ADI_Bin/DataTables/DataTables-1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="../../../../ADI_Bin/DataTables/DataTables-1.10.12/js/dataTables.bootstrap.min.js"></script>
+        
+        <script src="../../../../ADI_Bin/DataTables/Buttons-1.2.1/js/dataTables.buttons.min.js"></script>
+        <script src="../../../../ADI_Bin/DataTables/Buttons-1.2.1/js/buttons.flash.min.js"></script>
+        <script src="../../../../ADI_Bin/DataTables/JSZip-2.5.0/jszip.min.js"></script>
+        <script src="../../../../ADI_Bin/DataTables/pdfmake-0.1.18/build/pdfmake.min.js"></script>
+        <script src="../../../../ADI_Bin/DataTables/pdfmake-0.1.18/build/vfs_fonts.js"></script>
+        <script src="../../../../ADI_Bin/DataTables/Buttons-1.2.1/js/buttons.html5.min.js"></script>
+        <script src="../../../../ADI_Bin/DataTables/Buttons-1.2.1/js/buttons.colVis.min.js"></script>
+        
+        
+        
+        
+        
+        
+
+        <script>
+
+            function h5root(resource) { return "/{APPNAME}/ADI_Programacao/ADI_Bin/html5/".replace("{APPNAME}", location.pathname.split("/")[1]) + resource; }
+
+            $(document).ready(function(){
+                
+                //coloca nome da estrutura no painel da pagina
+                $("#lbEstrut").append(" "+url.val("estrutura"));
+
+                //trocar cor botao quando clicado
+                $(".container").on("click", ".btn", function(){
+                    $(".btn").removeClass("btn-success");
+                    $(this).addClass("btn-success");
+                });
+                
+                $("#btnAfastamento").on("click", null, function(){
+                    
+                    $("#painelTab").find("li#tab02").html("");
+                    
+                    var html = '<li id="tab02" ><a data-toggle="tab" href="#p02">Consulta Afastamento</a></li>';
+                    
+                    
+                    
+                    if(localSelecionado.length == 0)
+                    {
+                        alert("Local não selecionado");
+                        $("#myModal").modal("hide");
+                        return;
+                    }
+                    else
+                    {
+                        $("#myModal").modal("show");
+                        $("#painelTab").append(html);
+                        
+                        
+                        $("#painelTab").find("li").each(function (){
+                           $(this).removeClass("active");
+                        });
+                        
+                        $(".tab-content").find(".tab-pane").each(function (){
+                           $(this).removeClass("active in");
+                        });
+                        
+                        $("#tab02").addClass("active");
+                        $("#p02").addClass("active in");
+                        carregarDADOSTabelaAfastamento();
+                        
+                    }
+                });
+                
+                
+                
+                $("#btnFerias").on("click", null, function(){
+                    
+                    $("#painelTab").find("li#tab03").html("");
+                    
+                    var html = '<li id="tab03" ><a data-toggle="tab" href="#p03">Consulta Férias</a></li>';
+                    
+                    
+                    
+                    if(localSelecionado.length == 0)
+                    {
+                        alert("Local não selecionado");
+                        $("#myModal").modal("hide");
+                        return;
+                    }
+                    else
+                    {
+                        $("#myModal").modal("show");
+                        $("#painelTab").append(html);
+                        
+                        
+                        $("#painelTab").find("li").each(function (){
+                           $(this).removeClass("active");
+                        });
+                        
+                        $(".tab-content").find(".tab-pane").each(function (){
+                           $(this).removeClass("active in");
+                        });
+                        
+                        $("#tab03").addClass("active");
+                        $("#p03").addClass("active in");
+                        carregarDADOSTabelaFerias();
+                        
+                    }
+                });
+                
+                
+                $("#btnFunc").on("click", null, function(){
+                    
+                    $("#painelTab").find("li#tab04").html("");
+                    
+                    var html = '<li id="tab04" ><a data-toggle="tab" href="#p04">Consulta Funcionário</a></li>';
+                    
+                    
+                    
+                    if(localSelecionado.length == 0)
+                    {
+                        alert("Local não selecionado");
+                        $("#myModal").modal("hide");
+                        return;
+                    }
+                    else
+                    {
+                        $("#myModal").modal("show");
+                        $("#painelTab").append(html);
+                        
+                        
+                        $("#painelTab").find("li").each(function (){
+                           $(this).removeClass("active");
+                        });
+                        
+                        $(".tab-content").find(".tab-pane").each(function (){
+                           $(this).removeClass("active in");
+                        });
+                        
+                        $("#tab04").addClass("active");
+                        $("#p04").addClass("active in");
+                        carregarDADOSTabelaFuncionario();
+                        
+                    }
+                });
+                
+                
+                //carrega dados do local
+                var localSelecionado = ""
+                $(".container").on("click", "#btnLocal", function(){
+                    localSelecionado = $(this).val();
+                    carregaDadosPainelLocal($(this).val());
+                    
+                    $("#lbLocalCab").append(" "+$(this).attr("title"));
+                    
+                    $(".tab-content").find(".tab-pane").each(function (){
+                       $(this).removeClass("active in");
+                    });
+                    
+                    
+                    $("#painelTab").find("li").each(function(){
+                       //alert($(this).attr("id"));
+                       if($(this).attr("id") != "tab01")
+                            $(this).remove();
+                    });
+
+                    $("#tab01").addClass("active");
+                    $("#p01").addClass("active in");
+                        
+                    $("#tabelaDadosAfastamento").find("tbody").html("");
+                    $("#tabelaDadosFerias").find("tbody").html("");
+                    
+                    
+                    
+                });
+                
+                var tabelaFerias;
+                function carregarDADOSTabelaFerias()
+                {
+                    function onsuccess(objeto)            
+                    {
+                        //debugger;
+                        
+                        var rows = null;
+                        
+                        //parser do objeto para JSON
+                        rows = JSON.parse(objeto.tabelaFeriasLocal);
+
+                        if (typeof rows == "string") 
+                        {
+                            if (rows.slice(0, 5) == "error") 
+                            {
+                                    var parts = rows.split("|");						
+                                    console.error(rows);
+                                    alert(parts[0].slice(6,100));
+                                    return;
+                            }							
+                        }
+                        //debugger;
+                        //tabelaAfastamento = $('#tabelaAfastamento').DataTable();
+                        //console.log(rows);
+                        setTimeout(function (){abreTabelaFerias(rows);}, 600);
+                        
+                                             
+
+                    }
+                    function onfail(data)
+                    {
+                        console.log(data);
+                    }
+
+                    //objeto a ser passado como parametro para o jsp atraves de Ajax
+                    var dados = {acao:"carregaTabelaFerias", chave:localSelecionado };
+                    
+                    jQuery.ajax(
+                    {
+                        type: "GET",
+                        url: url.jsp(),
+                        data: dados,
+                        success: onsuccess,
+                        fail: onfail,
+
+                    });
+                }
+                
+                
+                function abreTabelaFerias(dados){
+                    
+                    tabelaFerias =  $('#tabelaFerias').DataTable({
+                        "scrollY": "auto",
+                        "scrollCollapse": true,
+                        "language": {"url": "../../../../ADI_Bin/DataTables/datatables.Portuguese.txt"},
+                        "lengthMenu": [[5, 25, 50, 500, -1], [5, 25, 50, 500, "Todos"]],
+                        "dom": 'Blfrtip',
+                        "buttons": [
+                            'csvHtml5', 'excel'
+                        ],
+                        "destroy": true,
+                        "initComplete": function(settings, json) {
+                                    $("#myModal").modal("hide");
+                                  },
+                        
+
+                        "data":dados,
+                        "columns": [
+                            
+                            { "data": "nome" },
+                            { "data": "matricula" },
+                            { "data": "descrrelacaofuncional" },
+                            { "data": "descrferias" },
+                            { "data": "aquisitivo" },
+                            { "data": "gozo" },
+                            { "data": "confirmada" }
+                        ]
+                        
+                        
+
+                    });
+                    
+                    
+                }
+                
+                
+                var tabelaAfastamento;
+                function carregarDADOSTabelaAfastamento(){
+                    
+                    function onsuccess(objeto)            
+                    {
+                        //debugger;
+                        
+                        var rows = null;
+                        
+                        //parser do objeto para JSON
+                        rows = JSON.parse(objeto.tabelaAfastLocal);
+
+                        if (typeof rows == "string") 
+                        {
+                            if (rows.slice(0, 5) == "error") 
+                            {
+                                    var parts = rows.split("|");						
+                                    console.error(rows);
+                                    alert(parts[0].slice(6,100));
+                                    return;
+                            }							
+                        }
+                        //debugger;
+                        //tabelaAfastamento = $('#tabelaAfastamento').DataTable();
+                        setTimeout(function (){abreTabelaAfastamento(rows);}, 600);
+                        
+                                             
+
+                    }
+                    function onfail(data)
+                    {
+                        console.log(data);
+                    }
+
+                    //objeto a ser passado como parametro para o jsp atraves de Ajax
+                    var dados = {acao:"carregaTabelaAfastamento", chave:localSelecionado };
+                    
+                    jQuery.ajax(
+                    {
+                        type: "GET",
+                        url: url.jsp(),
+                        data: dados,
+                        success: onsuccess,
+                        fail: onfail,
+
+                    });
+                    
+                    
+                }
+                
+                
+                
+                
+                function abreTabelaAfastamento(dados){
+                    
+                    tabelaAfastamento =  $('#tabelaAfastamento').DataTable({
+                        "scrollY": "auto",
+                        "scrollCollapse": true,
+                        "language": {"url": "../../../../ADI_Bin/DataTables/datatables.Portuguese.txt"},
+                        "lengthMenu": [[5, 25, 50, 500, -1], [5, 25, 50, 500, "Todos"]],
+                        "dom": 'Blfrtip',
+                        "buttons": [
+                            'csvHtml5', 'excel'
+                        ],
+                        "destroy": true,
+                        "initComplete": function(settings, json) {
+                                    $("#myModal").modal("hide");
+                                  },
+                        
+
+                        "data":dados,
+                        "columns": [
+                            
+                            { "data": "nome" },
+                            { "data": "matricula" },
+                            { "data": "descrrelacaofuncional" },
+                            { "data": "codafastamento" },
+                            { "data": "descricao" },
+                            { "data": "inicio" },
+                            { "data": "fim" },
+                            { "data": "qtediasdeafastamento" }
+                        ]
+                        
+                        
+
+                    });
+                    
+                    
+                }
+                
+                
+                var tabelaFuncionario;
+                function carregarDADOSTabelaFuncionario(){
+                    
+                    function onsuccess(objeto)            
+                    {
+                        //debugger;
+                        
+                        var rows = null;
+                        
+                        //parser do objeto para JSON
+                        rows = JSON.parse(objeto.tabelaFuncionarioLocal);
+
+                        if (typeof rows == "string") 
+                        {
+                            if (rows.slice(0, 5) == "error") 
+                            {
+                                    var parts = rows.split("|");						
+                                    console.error(rows);
+                                    alert(parts[0].slice(6,100));
+                                    return;
+                            }							
+                        }
+                        //debugger;
+                        //tabelaAfastamento = $('#tabelaAfastamento').DataTable();
+                        setTimeout(function (){abreTabelaFuncionario(rows);}, 600);
+                        
+                                             
+
+                    }
+                    function onfail(data)
+                    {
+                        console.log(data);
+                    }
+
+                    //objeto a ser passado como parametro para o jsp atraves de Ajax
+                    var dados = {acao:"carregaTabelaFuncionario", chave:localSelecionado };
+                    
+                    jQuery.ajax(
+                    {
+                        type: "GET",
+                        url: url.jsp(),
+                        data: dados,
+                        success: onsuccess,
+                        fail: onfail,
+
+                    });
+                    
+                    
+                }
+                
+                
+                
+                
+                function abreTabelaFuncionario(dados){
+                    
+                    tabelaFuncionario =  $('#tabelaFuncionario').DataTable({
+                        "scrollY": "auto",
+                        "scrollCollapse": true,
+                        "language": {"url": "../../../../ADI_Bin/DataTables/datatables.Portuguese.txt"},
+                        "lengthMenu": [[5, 25, 50, 500, -1], [5, 25, 50, 500, "Todos"]],
+                        "dom": 'Blfrtip',
+                        "buttons": [
+                            'csvHtml5', 'excel'
+                        ],
+                        "destroy": true,
+                        "initComplete": function(settings, json) {
+                                    $("#myModal").modal("hide");
+                                  },
+                        
+
+                        "data":dados,
+                        "columns": [
+                            
+                            { "data": "nome" },
+                            { "data": "matricula" },
+                            { "data": "descrrelacaofuncional" },
+                            { "data": "descrtipositfuncional" },
+                            { "data": "cargo" },
+                            { "data": "dtadmissao" },
+                            { "data": "salario" }
+                        ]
+                        
+                        
+
+                    });
+                    
+                    
+                }
+                
+                
+                //fazer incluir linha paineis
+                function carregaDadosPainelLocal(chave){
+                    //console.log(chave);
+                    
+                    function onsuccess(objeto)            
+                    {
+                        //debugger;
+                        //console.log("teste");
+                        
+                        var rowsAfast = null;
+                        var rowsFerias = null;
+                        
+                        //parser do objeto para JSON
+                        rowsAfast = JSON.parse(objeto.painelAfastLocal);
+                        rowsFerias = JSON.parse(objeto.painelFeriasLocal);
+
+                        if (typeof rowsAfast == "string") 
+                        {
+                            if (rowsAfast.slice(0, 5) == "error") 
+                            {
+                                    var parts = rowsAfast.split("|");						
+                                    console.error(rowsAfast);
+                                    alert(parts[0].slice(6,100));
+                                    return;
+                            }							
+                        }
+                        if (typeof rowsFerias == "string") 
+                        {
+                            if (rowsAfast.slice(0, 5) == "error") 
+                            {
+                                    var parts = rowsFerias.split("|");						
+                                    console.error(rowsFerias);
+                                    alert(parts[0].slice(6,100));
+                                    return;
+                            }							
+                        }
+                        
+                        
+                        //console.log(objeto.painelAfastLocal);
+                        //console.log(objeto.painelFeriasLocal);
+                        
+                        //interar para pegar os objetos passados
+                        
+                        //debugger;
+                        if(rowsAfast.length == 0)
+                        {
+                            var linha = $("<tr>");
+                            var coluna = "";
+                            
+                            coluna += "<td colspan='4' style='text-align:center'>Sem Registros</td>"
+                            
+                            linha.append(coluna);
+                            $("#tabelaDadosAfastamento").append(linha);
+                        }
+                        else
+                        {
+                            for(var i = 0; i < rowsAfast.length; i++)
+                            {
+
+                                var rowAfast = rowsAfast[i];
+
+                                var linha = $("<tr>");
+                                var coluna = "";
+
+                                coluna += "<td></td>"
+                                coluna += "<td>"+rowAfast.func+"</td>"
+                                coluna += "<td>"+rowAfast.descrtipoafastamento+"</td>"
+                                coluna += "<td>"+rowAfast.descrrelacaofuncional+"</td>"
+
+                                linha.append(coluna);
+                                $("#tabelaDadosAfastamento").append(linha);
+
+                            }
+                        }
+                        
+                        if(rowsFerias.length == 0)
+                        {
+                            var linha = $("<tr>");
+                            var coluna = "";
+                            
+                            coluna += "<td colspan='6' style='text-align:center'>Sem Registros</td>"
+                            
+                            linha.append(coluna);
+                            $("#tabelaDadosFerias").append(linha);
+                        }
+                        else
+                        {
+                            for(var i = 0; i < rowsFerias.length; i++)
+                            {
+
+                                var rowFerias = rowsFerias[i];
+
+                                var linha = $("<tr>");
+                                var coluna = "";
+
+                                coluna += "<td></td>"
+                                coluna += "<td>"+rowFerias.func+"</td>"
+                                coluna += "<td>"+rowFerias.descrrelacaofuncional+"</td>"
+                                coluna += "<td>"+rowFerias.descrferias+"</td>"
+                                coluna += "<td>"+rowFerias.dtiniciogozo+"</td>"
+                                coluna += "<td>"+rowFerias.dtfimgozo+"</td>"
+
+                                linha.append(coluna);
+                                $("#tabelaDadosFerias").append(linha);
+
+                            }
+                        }
+                        
+                        $("#myModal").modal("hide");                      
+
+                    }
+                    function onfail(data)
+                    {
+                        console.log(data);
+                    }
+
+                    //objeto a ser passado como parametro para o jsp atraves de Ajax
+                    var dados = {acao:"carregaDadosPainelLocal", chave:chave };
+                    
+                    jQuery.ajax(
+                    {
+                        type: "GET",
+                        url: url.jsp(),
+                        data: dados,
+                        success: onsuccess,
+                        fail: onfail,
+
+                    });
+                    
+                }
+                
+                //função inicial para carregar quais locais fazem parte dessa estrutura
+                function carregaLocais(){
+                    
+                    //função chamada caso o retorno do ajax seja satisfatorio, recebe objeto enviado pelo jsp como parametro
+                    function onsuccess(objeto)            
+                    {
+                        //debugger;
+                        
+                        var rows = null;
+                        
+                        //parser do objeto para JSON
+                        rows = JSON.parse(objeto.listaLocais);
+
+                        if (typeof rows == "string") 
+                        {
+                            if (rows.slice(0, 5) == "error") 
+                            {
+                                    var parts = rows.split("|");						
+                                    console.error(rows);
+                                    alert(parts[0].slice(6,100));
+                                    return;
+                            }							
+                        }
+                        
+                        
+                        //alert(objeto.lista);
+                        //interar para pegar os objetos passados
+                        
+                        var divLocais = ' ';
+                        
+                        divLocais += ' <div class="panel panel-default" style="margin-bottom:5px; text-align: center;"> ';
+                        divLocais += '                                          ';
+                        divLocais += '     <div class="row" > ';
+                        divLocais += '         <div class="col-sm-12"> ';
+                        divLocais += '             <table> ';
+                        divLocais += '                 <tr> ';
+                        divLocais += '                     <td><img class="img-responsive img " src="/ADI_Intranet_Root/ADI_Programacao/ADI_Bin/imagens/estrutura.png " style="width: 100px; height: 80px" /></td> ';
+                        divLocais += '                     <td> ';
+                        divLocais += '                         <div class="titleFildSet" style="width: 100%;  "> ';
+                        divLocais += '                             $P{Local}';
+                        divLocais += '                         </div> ';
+                        divLocais += '                     </td> ';
+                        divLocais += '                 </tr> ';
+                        divLocais += '             </table> ';
+                        divLocais += '  ';
+                        divLocais += '         </div> ';
+                        divLocais += '     </div> ';
+                        divLocais += '  ';
+                        divLocais += '     <div class="row"> ';
+                        divLocais += '         <div class="col-lg-12"> ';
+                        divLocais += '             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal" type="button" id="btnLocal" value="$P{chave}" title="$P{LocalButton}">Carregar</button> ';
+                        divLocais += '         </div> ';
+                        divLocais += '     </div> ';
+                        divLocais += '  ';
+                        divLocais += ' </div>         ';
+                        
+                        
+                        for (var i = 0; i < rows.length; i++) 
+                        {
+                            var row = rows[i];
+                            var html = divLocais;
+                            html = html.replace("$P{Local}", row.codlocaldetrabalho+" - "+row.descrestruturafisica );
+                            
+                            //adicionar no cabecalho nome do local selecionado
+                            
+                            
+                            html = html.replace("$P{chave}", row.seqlocaldetrabalho );
+                            html = html.replace("$P{LocalButton}", row.codlocaldetrabalho+" - "+row.descrestruturafisica );
+                            
+                            $("#divConteudoLocal").append(html);
+                            
+                        }
+                                             
+
+                    }
+                    function onfail(data)
+                    {
+                        console.log(data);
+                    }
+
+                    //objeto a ser passado como parametro para o jsp atraves de Ajax
+                    var dados = {acao:"carregaLocais", chave:url.val("seqEstrut") };
+                    
+                    jQuery.ajax(
+                    {
+                        type: "GET",
+                        url: url.jsp(),
+                        data: dados,
+                        success: onsuccess,
+                        fail: onfail,
+
+                    });
+
+                }
+                
+                carregaLocais();
+
+
+
+
+            });
+
+                
+
+        </script>
+        
+
+    </body>
+</html>        

@@ -29,14 +29,6 @@ and open the template in the editor.
   
 }
 
-
-header, footer 
-{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background: red;
-    text-align: center;
-}
 html, body 
 { 
     margin:0; height: 100%;
@@ -61,10 +53,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe7fa', end
 .textoCab
 {
     font-size: 20px;  
-}
-.container
-{
-    height: 100%;
 }
 #conteudo
 {
@@ -105,10 +93,6 @@ border-bottom: 0px;
     max-height: 200px;
     overflow-x: hidden;
 }
-
-
-
-    
 
 
 .centered {
@@ -214,4 +198,22 @@ div.transbox {
     .labTel{
         font-size: small;
     }
+}
+
+.fundo{
+    background-image: url("../imagens/fundo.jpg");
+    background-repeat: repeat;
+}
+
+.container-geral{
+    margin:0;
+    padding:0; 
+    //border:5px solid red; 
+    min-height: 100vh; 
+    position:relative;
+}
+.footer {
+	position:absolute;
+	bottom:0;
+	width:100%;
 }

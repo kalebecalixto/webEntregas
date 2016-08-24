@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<div class="container " style="margin-top: 5em; position: relative; height: 80%;" >
+    <style type="text/css" scoped="scoped">
+	@import url("../../../../ADI_Bin/css/style.css");
+        @import url("../../../../ADI_Bin/css/bootstrap.min.css");
+        @import url("../../../../ADI_Bin/css/bootstrap-select.min.css");
+        @import url("../../../../ADI_Bin/DataTables/DataTables-1.10.12/css/dataTables.bootstrap.min.css");
+    </style>
+    
+    <div data-backdrop="static" class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div id="divCorpo"> <img id="loading" alt="Carregando" title="Carregando" src="/ADI_Intranet_Root/ADI_Programacao/ADI_Bin/html5/aguarde.gif"/>  </div>
+        </div>
+    </div>
+    
+    <div class="row"  >
+        <div class="col-sm-11" ></div>
+        <div class="col-sm-1" >
+            <img width="50" height="40" id="fechar" alt="Fechar" title="Fechar" src="/ADI_Intranet_Root/ADI_Programacao/ADI_Bin/imagens/botoes/fechar.png" class="img-responsive img-rounded"/>
+        </div>
+    </div>
+
+    <div class="row"  >
+        <div class="col-sm-12" >
+
+
+            <div class="panel panel-default scrollable-container" style="position: relative; height: 100%">
+                <div class="panel-body ">
+                    <ul id="painelTab" class="nav nav-tabs textformat_tab">
+                        <li id="tab01" class="active"><a data-toggle="tab" href="#p01">01 - Carregar Filtros</a></li>
+                        <li id="tab02" ><a data-toggle="tab" href="#p02">02 - Salvar Filtros</a></li>
+                    </ul>
+
+                    <div class="tab-content "  >
+                        <div id="p01" class="tab-pane fade in active" style="padding-top:20px">
+                            <div class="row">
+                                <div class="col-sm-12" style="text-align: left">
+                                    <label>Filtros</label>
+
+                                    <table id="tabelaCarregarFiltros" class="table table-striped" >
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Nome Filtro</th>
+                                                <th>Usuário</th>
+                                                <th>Status Filtro</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody style=" height: 20px; overflow: auto">
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div id="p02" class="tab-pane fade" style="padding-top:20px">
+                            <div class="row">
+                                <div class="col-sm-12" style="text-align: left">
+
+                                    <form class="form-inline" role="form">
+                                        <div class="form-group">
+                                          <label for="nomefiltro">Nome Filtro:</label>
+                                          <input type="text" class="form-control" id="idNomeFiltro">
+                                        </div>
+                                    </form>
+
+                                    <label class="textoCab">Preview do Filtro</label>
+                                    <div style="height:420px; overflow: auto">
+                                        <table id="tabelaDados" class="table table-striped" >
+                                            <thead>
+                                                <tr>
+                                                    <th>Nome Comp</th>
+                                                    <th>Tipo Comp</th>
+                                                    <th>Valor Comp</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody style="  height: 20px; overflow: auto">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr width=100%>
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary btn-block" type="button" id="btnSalvar" >Salvar Filtros</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../ADI_Bin/js/jquery-2.2.1.min.js"></script>
+<script src="../../../../ADI_Bin/js/bootstrap.min.js"></script>
+<script src="../../../../ADI_Bin/js/bootstrap-select.min.js"></script>
+
+<script src="../../../../ADI_Bin/html5/url.js"></script>
+<script src="../../../../ADI_Bin/DataTables/DataTables-1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="../../../../ADI_Bin/DataTables/DataTables-1.10.12/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+
+        function h5root(resource) { return "/{APPNAME}/ADI_Programacao/ADI_Bin/html5/".replace("{APPNAME}", location.pathname.split("/")[1]) + resource; }
+
+        $(document).ready(function(){
+
+            $("#fechar").click(function(){
+                $("#mask").hide();
+            });
+
+        buscaFiltros();    
+
+        function buscaFiltros()
+        {
+            function onsuccess(objeto)
+            {
+                //debugger;
+                var lista = null;
+                listaDet = null;
+                lista = JSON.parse(objeto.lista);
+                listaDet = JSON.parse(objeto.listaDet);
+
+                if (typeof lista == "string")
+                {
+                    if (lista.slice(0, 5) == "error")
+                    {
+                            var parts = lista.split("|");
+                            console.error(lista);
+                            alert(parts[0].slice(6,100));
+                            return;
+                    }
+                }
+
+                //alert(objeto.lista);
+
+
+                listaFiltros(lista);
+            }
+            function onfail(data)
+            {
+                /*obj.html(data);*/
+            }
+
+            var dados = {acao:"listar", dados:encodeURIComponent(""), seqRelatorio:seqRelatorio, seqModelo:seqModelo, codUsuario:usuario};
+            jQuery.ajax(
+            {
+                type: "GET",
+                url: location.pathname.replace("folExibeRelatoriosDoSistema", "filtrosPredefinidos"),
+                data: dados,
+                async: false,
+                success: onsuccess,
+                fail: onfail,
+
+            });
+
+
+
+        }
+        var table;
+        function listaFiltros(dados)
+        {
+            //debugger;,
+
+            table =  $('#tabelaCarregarFiltros').DataTable({
+                    "scrollY":        "43vh",
+                    "scrollCollapse": true,
+                    "destroy": true,
+
+                    "language": {"url": "../../../../ADI_Bin/DataTables/datatables.Portuguese.txt"},
+                    "lengthMenu": [[5, 25, 50, 500, -1], [5, 25, 50, 500, "Todos"]],
+
+                    "data":dados,
+                    "columns": [
+                            {
+                                "className":      'details-control',
+                                "orderable":      false,
+                                "data":           null,
+                                "defaultContent": ''
+                            },
+                            {   "data": "nome" },
+                            {   "data": "usuario" },
+                            {   "data": "status" },
+                            {   "render": function (data, type, row) 
+                                {                 
+                                    console.log(row);
+                                    console.log("++++++");
+                                    console.log(type);
+                                    console.log("++++++");
+                                    console.log(data);
+                                    return '<button class="btn btn-primary btn-block" type="button" id="btnCarregarDireto"  value='+row.nome+' data-toggle="modal" data-target="#myModal" >Carregar Filtro</button>'
+                                },
+                                "orderable":      false,
+                                "data":           null,
+                            },
+                            {   "render": function (data, type, row) 
+                                {                 
+                                    console.log(row);
+                                    console.log("++++++");
+                                    console.log(type);
+                                    console.log("++++++");
+                                    console.log(data);
+                                    return '<button class="btn btn-danger btn-block" type="button" id="btnExcluir"  value='+row.nome+' >Excluir Filtro</button>'
+                                }, 
+                                "orderable":      false,
+                                "data":           null,
+                            }
+
+                        ]
+
+                });
+        }
+
+
+        var CompDofiltro = new Array();
+        
+        var arrayCompFiltros = new Array();
+        
+        $("#tabelaCarregarFiltros tbody").on("click", "#btnCarregarDireto", function(){
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+            var nadaPraPegarReturn = format(listaDet, row.data().nome);
+            chamarRec = true;
+            arrayCompFiltros = CompDofiltro;
+            carregarCompTela();
+        })
+        
+        
+        $("#tabelaCarregarFiltros tbody").on("click", "#btnExcluir", function(){
+            function onsuccess(objeto)
+            {
+                
+                table.destroy();
+                buscaFiltros();
+            }
+            function onfail(data)
+            {
+                /*obj.html(data);*/
+            }
+
+            var dados = {acao:"delete", dados:encodeURIComponent(""), seqRelatorio:seqRelatorio, seqModelo:seqModelo, codUsuario:usuario, chave:$(this).val()};
+            jQuery.ajax(
+            {
+                type: "GET",
+                url: location.pathname.replace("folExibeRelatoriosDoSistema", "filtrosPredefinidos"),
+                data: dados,
+                async: false,
+                success: onsuccess,
+                fail: onfail,
+
+            });
+        })
+        
+        $('#tabelaCarregarFiltros tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row( tr );
+
+                if ( row.child.isShown() ) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    //alert(row.data().nome);
+                    row.child( format(listaDet, row.data().nome) ).show();
+                    tr.addClass('shown');
+
+
+                    $("#btnCarregar").click(function(){
+                        //debugger;
+                        //$("#mask").hide();
+                        chamarRec = true;
+                        arrayCompFiltros = CompDofiltro;
+                        carregarCompTela();
+                        
+                    });
+
+                    $("#btnGerar").click(function(){
+
+                    });
+
+
+                }
+            } );
+
+
+            /* Formatting function for row details - modify as you need */
+            function format ( dados, linhaclicada ) {
+                //alert(dados.length);
+                var linha = "";
+                CompDofiltro = new Array();
+                //alert(linhaclicada)
+                for(var i = 0; i < dados.length; i++)
+                {
+                   var comp = dados[i];
+
+
+                    //alert(comp.nome);
+                    if(comp.nome == linhaclicada)
+                    {
+
+                        var objComponente = new Componente();
+
+                        objComponente.setNome(comp.nomecomp);
+                        objComponente.setTipo(comp.tipocomp);
+                        objComponente.setValor(comp.valorcomp);
+                        objComponente.setTexto(comp.textocomp);
+                        objComponente.setIndice(comp.indexcomp);
+                        objComponente.setLabel(comp.labelcomp);
+
+                        CompDofiltro.push(objComponente);
+
+                        if(comp.tipocomp != "hidden")
+                        {
+
+                            linha += "<tr>";
+                            linha += "<td>"+comp.labelcomp+"</td>"
+                            linha += "<td>"+comp.tipocomp+"</td>"
+                            //debugger;
+                            if(comp.tipocomp == "combo" || comp.tipocomp == "comboMultiSelect" )
+                                linha += "<td>"+comp.textocomp+"</td>"
+                            else if( comp.tipocomp == "checkbox" )
+                                linha += "<td>"+(comp.valorcomp == undefined ? "" : "Selecionado" )+"</td>"
+                            else 
+                                linha += "<td>"+(comp.valorcomp == undefined ? "" : comp.valorcomp )+"</td>"
+
+                            linha += "</tr>";
+                        }
+                    }
+
+                }
+
+                //alert(linha);
+                // `d` is the original data object for the row
+                var tabela =  '<table id="tabelaDadosDetalhado" class="table table-striped" >'+
+                '    <thead style="font-size:small">'+
+                '        <tr>'+
+                '            <th>Nome Comp</th>'+
+                '            <th>Tipo Comp</th>'+
+                '            <th>Valor Comp</th>'+
+                '        </tr>'+
+                '    </thead>'+
+                ''+
+                '    <tbody >'+
+                linha+
+                '    </tbody>'+
+                '</table>'+
+                '<hr width=100%>'+
+                '<div id="testeBotao"  class="col-xs-12">'+
+                    '<div class="col-xs-12">'+
+                    '    <button class="btn btn-primary btn-block" type="button" id="btnCarregar"  value='+comp.nome+' data-toggle="modal" data-target="#myModal" >Carregar Filtros</button>'+
+                    '</div>'+
+                    //'<div class="col-xs-6">'+
+                    //'    <button class="btn btn-primary btn-block" type="button" id="btnGerar" value='+comp.nome+'  >Gerar Relatório</button>'+
+                    //'</div>'+
+                '</div>';
+
+                //alert(tabela)
+                return tabela;
+            }
+
+
+        function Componente ()
+        {
+            var nome;
+            var tipo;
+            var texto;
+            var indice;
+            var valor;
+            var label;
+
+            this.setNome = function(vNome){
+                this.nome = vNome;
+            };
+
+            this.setTipo = function(vTipo){
+                this.tipo = vTipo;
+            };
+
+            this.setTexto = function(vTexto){
+                this.texto = vTexto;
+            };
+
+            this.setIndice = function(vIndice){
+                this.indice = vIndice;
+            };
+
+            this.setValor = function(vValor){
+                this.valor = vValor;
+            };
+
+            this.setLabel = function(vValor){
+                this.label = vValor;
+            };
+
+
+            this.getNome = function(){
+               return this.nome;
+            };
+
+            this.getTipo = function(){
+               return this.tipo;
+            };
+
+            this.getTexto = function(){
+               return this.texto;
+            };
+
+            this.getIndice = function(){
+               return this.indice;
+            };
+
+            this.getValor = function(){
+               return this.valor;
+            };
+
+            this.getLabel = function(){
+               return this.label;
+            };
+
+        }
+
+
+
+        var componentes = new Array();
+
+
+        $("#tab02").on("click", null, function(){
+
+            componentes = new Array();
+
+           if($("#tblRel select").size()>=1)
+            {
+                $("#tblRel select").each(function(){
+
+
+                    if($(this).attr("multiple") == "multiple")
+                    {
+                        var nome = $(this).attr("name");
+                        var label = $(this).attr("name");
+
+                        $(this).find("option:selected").each(function(){
+                            var objComponente = new Componente();
+
+                            objComponente.setNome(nome);
+                            objComponente.setTipo("comboMultiSelect");
+                            objComponente.setValor($(this).val());
+                            objComponente.setTexto($(this).text());
+                            objComponente.setIndice($(this).index());
+                            objComponente.setLabel(label);
+
+                            componentes.push(objComponente);
+                        });
+
+                        //alert($(this).find("option:selected").text());
+                        //alert($(this).find("option:selected").index());
+                        //alert($(this).find("option:selected").val());
+                    }
+                    else
+                    {
+                        var objComponente = new Componente();
+
+                        objComponente.setNome($(this).attr("name"));
+                        objComponente.setTipo("combo");
+                        objComponente.setValor($(this).find("option:selected").val());
+                        objComponente.setTexto($(this).find("option:selected").text());
+                        objComponente.setIndice($(this).find("option:selected").index());
+                        objComponente.setLabel($(this).attr("label"));
+
+                        componentes.push(objComponente);
+                    }
+
+                });
+            }
+
+
+            if($("#tblRel input:radio").size()>=1)
+            {
+                $("#tblRel input:radio:checked").each(function(){
+                    var nomeRadio = $(this).attr("name");
+                    //alert(nomeRadio);
+                    //alert($(this).val());
+
+                    var objComponente = new Componente();
+
+                    objComponente.setNome(nomeRadio);
+                    objComponente.setTipo("radio");
+                    objComponente.setValor($(this).val());
+                    objComponente.setLabel($(this).attr("label"));
+
+                    componentes.push(objComponente);
+
+
+                });
+            }
+
+            if($("#tblRel input:text").size()>=1)
+            {
+                $("#tblRel input:text").each(function(){
+                    //alert($(this).attr("name"));
+                    //alert($(this).val());
+
+                    var objComponente = new Componente();
+
+                    objComponente.setNome($(this).attr("name"));
+                    objComponente.setTipo("texto");
+                    objComponente.setValor($(this).val());
+                    objComponente.setLabel($(this).attr("label"));
+
+                    componentes.push(objComponente);
+
+                });
+            }
+
+            if($("#tblRel input:hidden").size()>=1)
+            {
+                $("#tblRel input:hidden").each(function(){
+                    //alert($(this).attr("name"));
+                    //alert($(this).val());
+
+                    var objComponente = new Componente();
+
+                    objComponente.setNome($(this).attr("name"));
+                    objComponente.setTipo("hidden");
+                    objComponente.setValor($(this).val());
+                    objComponente.setLabel($(this).attr("label"));
+
+                    componentes.push(objComponente);
+
+
+                });
+            }
+            
+            
+            if($("input:checkbox").size()>=1)
+            {
+                
+                $("input:checkbox:checked").each(function(){
+                    //alert($(this).attr("name"));
+                    //alert($(this).val());
+                    //debugger;
+                    var objComponente = new Componente();
+
+                    objComponente.setNome($(this).attr("name"));
+                    objComponente.setTipo("checkbox");
+                    objComponente.setValor($(this).val());
+                    objComponente.setLabel($(this).attr("title"));
+
+                    componentes.push(objComponente);
+
+
+                });
+            }
+
+            exibeComponentes();
+        });
+
+        var conteudoFiltros = [];
+        function exibeComponentes()
+        {
+            //alert(componentes.length);
+
+
+            for(var i = 0 ; i < componentes.length; i++ )
+            {
+                var comp = componentes[i];
+
+                //alert("Tipo: "+comp.getTipo());
+                //alert("label: "+comp.getLabel());
+                //alert("nome: "+comp.getNome());
+                //alert("valor: "+comp.getValor());
+                //alert("indice: "+comp.getIndice());
+                //alert("texto: "+comp.getTexto());
+
+
+                if(comp.getTipo() != "hidden")
+                {
+                    var linha = $("<tr>");
+                    var coluna = "";
+
+                    coluna += "<td>"+comp.getLabel()+"</td>"
+                    coluna += "<td>"+comp.getTipo()+"</td>"
+                    if(comp.getTipo() == "combo" || comp.getTipo() == "comboMultiSelect" )
+                        coluna += "<td>"+comp.getTexto()+"</td>"
+                    else if(comp.getTipo() == "checkbox")
+                        coluna += "<td> Selecionado </td>"
+                    else
+                        coluna += "<td>"+comp.getValor()+"</td>"
+
+                    linha.append(coluna);
+                    $("#tabelaDados").append(linha);
+                }
+                conteudoFiltros.push("(nextval('basfiltrosRelatorio_seq'), "+seqRelatorio+", "+seqModelo+", '"+usuario+"', 1, 'nomeFiltro', '"+comp.getTipo()+"', '"+comp.getNome()+"', '"+comp.getValor().replace(/'/gi,"#")+"', '"+comp.getIndice()+"', '"+comp.getTexto()+"', '"+comp.getLabel()+"', false )")
+            }
+
+
+        }
+
+        $("#btnSalvar").on("click", null, function(){
+            //alert(conteudoFiltros.toString());
+            salvar();
+        });
+
+
+        function salvar()
+        {
+            function onsuccess(rows)
+            {
+                alert("Filtro Salvo!");
+            }
+            function onfail(data)
+            {
+                alert("Erro ao Salvar Filtro!");
+            }
+            
+            //debugger;
+            
+            //console.log(conteudoFiltros.toString().replace(/''/gi, "null").replace(/'undefined'/gi, "null").replace(/^/gi, "''").replace(/nomeFiltro/gi, $("#idNomeFiltro").val()).toString());
+            //return;
+            
+            //console.log(encodeURIComponent(conteudoFiltros.toString().replace(/''/gi, "null").replace(/'undefined'/gi, "null").replace(/#/gi, "''").replace(/nomeFiltro/gi, $("#idNomeFiltro").val()).toString()));
+            
+            var dados = {acao:"inserir",dados:encodeURIComponent(conteudoFiltros.toString().replace(/''/gi, "null").replace(/'undefined'/gi, "null").replace(/#/gi, "''").replace(/nomeFiltro/gi, $("#idNomeFiltro").val()).toString())}
+            jQuery.ajax(
+            {
+                type: "POST",
+                url: location.pathname.replace("folExibeRelatoriosDoSistema", "filtrosPredefinidos"),
+                data: dados,
+                success: onsuccess,
+                fail: onfail,
+
+            });
+        }
+
+        /*
+        function carregarCompTela(arrayCompFiltro)
+        {
+
+
+            //alert(arrayCompFiltro.length);
+
+            for(var i = 0; i < arrayCompFiltro.length; i++ )
+            {
+               var compFiltro = arrayCompFiltro[i];
+
+                if(compFiltro.getTipo() == "combo")
+                {
+
+                    //alert(compFiltro.getNome()+" "+compFiltro.getTexto())
+
+                    //quando combo verificar qual text corresponde ao salvo e setar o valor do combo com o valor do item selecionado que bate com o valor salvo em banco
+                    $("[name="+compFiltro.getNome()+"]").find("option").each(function(){
+
+
+                        //alert($(this).text().trim()+" "+ compFiltro.getTexto());
+                        if($(this).text().trim() == compFiltro.getTexto().trim() )
+                        {
+
+                            //alert($("[name="+compFiltro.getNome()+"]").attr("onchange"))
+
+                            $("[name="+compFiltro.getNome()+"]").val($(this).val());
+                            $("[name="+compFiltro.getNome()+"]").change();
+                            //alert("teste");
+
+                        }
+                   });
+
+                }
+
+            }
+
+            alert("Filtro Carregado!")
+        }
+        */
+
+        
+        
+        var chamarRec = false;
+        var k = 0;
+        var deselecionar = true;
+        
+        var recursao = function () {
+            //alert("01");
+            //debugger;
+
+
+            if(k < ((arrayCompFiltros.length)))
+            {
+                if(arrayCompFiltros.length != 0);
+                {
+                    //Desativar todos check na entrada
+                    
+                    //
+                    //
+                    //debugger;
+                    //alert("teste");
+                    var compFiltro = arrayCompFiltros[k];
+
+                    //alert(compFiltro.getNome());
+                    //alert(compFiltro.getTipo());
+                    
+                    var nomeComponente = compFiltro.getNome();
+                    var componente = document.form1[nomeComponente];
+                    console.log(compFiltro.getNome());
+                    if(compFiltro.getTipo() == "combo")
+                    {
+
+                        //alert(compFiltro.getNome()+" "+compFiltro.getTexto())
+
+                        //quando combo verificar qual text corresponde ao salvo e setar o valor do combo com o valor do item selecionado que bate com o valor salvo em banco
+
+
+
+                        var elms = $("[name="+compFiltro.getNome()+"]").find("option");
+
+                        //debugger;
+                        for (var l = 0; l < elms.length; l++) 
+                        {
+                            var elm = elms[l];
+
+                            //alert($(this).text().trim()+" "+ compFiltro.getTexto());
+
+                            //alert(elm.innerHTML.trim());
+                            //alert(compFiltro.getTexto().trim());
+
+                            if(elm.innerHTML.trim() == compFiltro.getTexto().trim() )
+                            {
+
+                                //alert($("[name="+compFiltro.getNome()+"]").attr("onchange"))
+
+                                //debugger;
+                                componente.value = elm.value;
+                                //$(componente).val($(elm).val());
+                                //pegar o codigo fonte de TODAS as funções associadas ao evento desejado
+                                //em cada funcao adicionar codigo para chamar a funcao recursao ao seu final, ultimo caracter dever sero } alterar para recursao();}
+                                //com o eval, chamar a funcao modificada.
+                                //debugger;
+                                //$(componente).change();                        
+
+                                if (componente.onchange == null)
+                                {
+                                    k++;
+                                    setTimeout(carregarCompTela(arrayCompFiltros), 100);
+                                    //continue;
+                                }
+                                else
+                                {
+                                    //$("[name="+compFiltro.getNome()+"]").change();
+                                    $(componente).change();
+                                    //componente.onchange;
+                                    //selecionaCombo(componente,0);
+                                    //montaComboMes();
+
+                                    //debugger;
+                                    //inicio da funcao
+                                    /*
+                                    fsource = fsource.substring(procurado.length).replace("this","componente", "gi");
+                                    //fsource = "(function() {" + fsource;                        
+
+                                    //fim da funcao
+                                    fsource = fsource.substring(0, fsource.length - 1);
+                                    fsource += " k++; setTimeout(carregarCompTela(arrayCompFiltros), 3000);}());"
+                                    //fsource += "recursao();}());";
+
+                                    console.log(fsource);
+
+                                    eval(fsource);
+                                    break;
+                                    */
+                                    k++; 
+                                    setTimeout(recursao,250);
+
+                                    //$("[name="+compFiltro.getNome()+"]").val($(elm).val());
+                                    //$("[name="+compFiltro.getNome()+"]").change();                            
+                                    //alert("teste");
+                                }
+
+
+                            }
+                        }
+
+
+                    }
+                    else if(compFiltro.getTipo() == "texto")
+                    {
+                        
+                        componente.value = (compFiltro.getValor() == undefined ? "" : compFiltro.getValor() );
+                        k++; 
+                        setTimeout(function(){recursao();},100);
+                    }
+                    else if(compFiltro.getTipo() == "hidden")
+                    {
+                        //debugger;
+                        
+                        if(seqRelatorio+""+pad(seqModelo, 2) == "922304" || seqRelatorio+""+pad(seqModelo, 2) == "929301" )
+                        {
+                            
+                            if(compFiltro.getNome() == "hidCodServidor")
+                            {
+                                filtrarTemposECargos(compFiltro.getValor());
+                            }
+                        }
+
+                        componente.value = (compFiltro.getValor() == undefined ? "" : compFiltro.getValor() );
+                        k++; 
+                        setTimeout(function(){recursao();},100);
+                    }
+                    else if(compFiltro.getTipo() == "radio")
+                    {
+
+                        componente.value = compFiltro.getValor();
+                        k++; 
+                        setTimeout(function(){recursao();},100);
+                    }
+                    else if(compFiltro.getTipo() == "comboMultiSelect")
+                    {
+                        //debugger;
+                        var elms = $("[name="+compFiltro.getNome()+"]").find("option");
+                        
+                        for (var l = 0; l < elms.length; l++) 
+                        {
+                            var elm = elms[l];
+                            if(elm.innerHTML.trim() == compFiltro.getTexto().trim() )
+                            {
+                                componente.options[l].selected = true;
+                               
+                                break;
+                            }
+                            
+                        }
+                        k++;
+                        setTimeout(function(){recursao();},100);
+                    }
+                    else if(compFiltro.getTipo() == "checkbox")
+                    {
+                       // debugger;
+                        if(deselecionar)
+                        {
+                            
+                            deselecionar = false;
+                            $("input:checkbox").attr("checked", false); 
+                            
+                        }
+                        else
+                        {
+                            
+                            $("input:checkbox").each(function(){
+                                //debugger;
+                                if($(this).attr("title") == compFiltro.getLabel())
+                                {
+                                    //$(this).attr("checked", true);
+                                    //$(this).prop("checked", true);
+                                    
+                                    $(this).click();
+                                    
+                                }
+                            });
+
+                            k++; 
+                            
+                        }
+                        setTimeout(function(){recursao();},100);
+                    }
+                    
+                    else
+                    {
+                        k++;
+                        setTimeout(function(){recursao();},100);
+                    }
+                }
+
+            }
+            else
+            {
+                //alert("carregado");
+                $("#myModal").modal("hide");
+                $("#mask").hide();
+            }
+           
+        };
+        
+        function carregarCompTela()
+        {
+
+            if(chamarRec)
+            {
+                
+               $("input:checkbox").attr("checked", false); 
+               recursao();
+            }
+
+
+        }
+        
+
+        });
+
+</script>

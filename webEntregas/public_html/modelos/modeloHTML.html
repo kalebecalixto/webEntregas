@@ -16,78 +16,86 @@ Autor: Kalebe Calixto
         <!-- Estilo do datatable -->
         <!-- <link rel="stylesheet" href="../DataTables/DataTables-1.10.11/css/dataTables.bootstrap.min.css" type="text/css"/> -->
     </head>
-    <body>
-        <!-- Implementa a barra de navegação --> 
-        <nav class="navbar navbar-default">
-            <div class="container">
-                    <!-- Implementa uma parte para a logo do sistema --> 
-                    <div class="navbar-header">
-                        <!-- Implementa Botao que aparece somente se o tamanho da tela for pequeno e implementa os links dentro dele  --> 
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#barraNav">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" style="line-height: 5px" href="#"> <div id="logo" style="text-align: center">CLICK ENTREGAS <p class="h6">Clicou Pediu Chegou</div></a>
-                    </div>
-                    <!-- Implementa Funcao que determina se os menus irao aparecer no botao acima implementados ou na tela (depende tamanho da tela)  -->
-                    <div class="collapse navbar-collapse" id="barraNav">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#">Principal</a></li>
-                            <li ><a href="#">Ajuda</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Cadastra-se</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Entrar</a></li>   
-                        </ul>
-                    </div>
-            </div>
-                
-         </nav>
+    <body class="fundo">
         
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12" >
-                    <!-- Conteudo aqui Dentro -->
-                    
+        <div class="container-geral" >
+            <!-- Implementa a barra de navegação -->
+            <header>
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                            <!-- Implementa uma parte para a logo do sistema --> 
+                            <div class="navbar-header">
+                                <!-- Implementa Botao que aparece somente se o tamanho da tela for pequeno e implementa os links dentro dele  --> 
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#barraNav">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" style="line-height: 5px" href="#"> <div id="logo" style="text-align: center">CLICK ENTREGAS <p class="h6">Clicou Pediu Chegou</div></a>
+                            </div>
+                            <!-- Implementa Funcao que determina se os menus irao aparecer no botao acima implementados ou na tela (depende tamanho da tela)  -->
+                            <div class="collapse navbar-collapse" id="barraNav">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="active"><a href="#">Principal</a></li>
+                                    <li ><a href="#">Ajuda</a></li>
+                                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Cadastra-se</a></li>
+                                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Entrar</a></li>   
+                                </ul>
+                            </div>
+                    </div>
+                </nav>
+            </header>
 
-                    
-                    
-                    
-                </div>
-            </div>
-            <div class="container">
+
+
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12" >
                         <!-- Conteudo aqui Dentro -->
+
+
+
+
+
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12" >
+                            <!-- Conteudo aqui Dentro -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        
-        
-        <script src="../js/jquery-2.2.1.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        
-        <!-- <script src="../js/bootstrap-select.min.js"></script> -->
-        <!-- <script src="../js/jquery-ui-1.11.4.redmond/jquery-ui.js"></script> -->
-        
-        
-        <!-- <script src="../DataTables/DataTables-1.10.11/js/jquery.dataTables.min.js"></script> -->
-        <!-- <script src="../DataTables/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script> -->
-        
+            
+            <footer>
+                <div class="footer"> FOOTER </div>
+            </footer>
 
-        
-        
-        <script>
-        
-        $(document).ready(function(){
-            
-        });
-         
-            
-        </script>
-    
-    
-    
+
+            <script src="../js/jquery-2.2.1.min.js"></script>
+            <script src="../js/bootstrap.min.js"></script>
+
+            <!-- <script src="../js/bootstrap-select.min.js"></script> -->
+            <!-- <script src="../js/jquery-ui-1.11.4.redmond/jquery-ui.js"></script> -->
+
+
+            <!-- <script src="../DataTables/DataTables-1.10.11/js/jquery.dataTables.min.js"></script> -->
+            <!-- <script src="../DataTables/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script> -->
+
+
+
+
+            <script>
+
+            $(document).ready(function(){
+
+            });
+
+
+            </script>
+
+
+        </div>
     </body>
 </html>

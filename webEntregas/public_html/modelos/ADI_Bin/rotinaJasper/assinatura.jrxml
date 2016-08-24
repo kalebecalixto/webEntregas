@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="assinatura" pageWidth="565" pageHeight="842" columnWidth="565" columnSpacing="15" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f452d29e-4177-4062-b4ec-8996b7ccec3c">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="seqRelatorio" class="java.lang.String"/>
+	<parameter name="logotipo" class="java.lang.String">
+		<parameterDescription><![CDATA["/ADI_Intranet_Root/ADI_Programacao/ADI_MaxNetADI/baseUpload/empresa1/persona/pessoa1248/logo_1_1248.jpg"]]></parameterDescription>
+	</parameter>
+	<parameter name="dataSistema" class="java.lang.String">
+		<parameterDescription><![CDATA[Data do sistema]]></parameterDescription>
+	</parameter>
+	<parameter name="seqOrgaoExped" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usaEspaco" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[Boolean.TRUE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="geraVazio" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select nomeRazaoSocial,P.codPessoa,descrFuncao, matricula, impMatriculaResp, descrprofissao, numeroregprofissional, siglaOrgaoExped
+from basGerenciadorRelatSistema GRS
+inner join basRelatorioResponsaveis RR on GRS.seqRelatorio=RR.seqRelatorio
+inner join basAssinaturasRelatorios AR on AR.codUsuario=RR.codUsuario and AR.codSistema=GRS.codSistema
+and dtInicio<=$P{dataSistema} and ( dtFim>=$P{dataSistema} or dtFim is null )
+inner join segUsuario U on AR.codUsuario=U.codUsuario and U.idExclusao=0
+inner join basPessoas P on U.codPessoa=P.codPessoa
+left join basfuncao F on U.codFuncao=F.codFuncao and GRS.impCargoResp=1
+left join basPessoaProfissao PP on PP.codPessoa=P.codPessoa and PP.seqOrgaoExped=$P{seqOrgaoExped}
+left join basOrgaoExpedidor OE on PP.seqOrgaoExped=OE.seqOrgaoExped
+left join basProfissao BP on BP.CODPROFISSAO = PP.CODPROFISSAO
+where GRS.seqRelatorio=$P{seqRelatorio} and USAASSINATURA=1
+order by ordemAssinatura]]>
+	</queryString>
+	<field name="nomerazaosocial" class="java.lang.String"/>
+	<field name="codpessoa" class="java.lang.Long"/>
+	<field name="descrfuncao" class="java.lang.String"/>
+	<field name="matricula" class="java.lang.String"/>
+	<field name="impmatricularesp" class="java.lang.Long"/>
+	<field name="descrprofissao" class="java.lang.String"/>
+	<field name="numeroregprofissional" class="java.lang.String"/>
+	<field name="siglaorgaoexped" class="java.lang.String"/>
+	<variable name="auxMontagem" class="java.lang.String">
+		<variableExpression><![CDATA[$V{auxMontagem}.equals("1")?"0":"1"]]></variableExpression>
+		<initialValueExpression><![CDATA["1"]]></initialValueExpression>
+	</variable>
+	<variable name="nomePassado" class="java.lang.String">
+		<variableExpression><![CDATA[$V{auxMontagem}.equals("0")?$F{nomerazaosocial}:$V{nomePassado}]]></variableExpression>
+	</variable>
+	<variable name="funcaoPassado" class="java.lang.String">
+		<variableExpression><![CDATA[$V{auxMontagem}.equals("0")?$F{descrfuncao}:$V{funcaoPassado}]]></variableExpression>
+	</variable>
+	<variable name="matriculaPassado" class="java.lang.String">
+		<variableExpression><![CDATA[$V{auxMontagem}.equals("0")?
+  ($F{impmatricularesp}.intValue()==0?
+    "":
+    ( $P{seqOrgaoExped}.equals("0")?
+      ( $F{matricula}==null?"":"\nMatrícula: "+$F{matricula} )
+    :
+      ($F{numeroregprofissional}==null?"":"\n" + $F{descrprofissao} + "\n " + $F{siglaorgaoexped} + " Nº" + $F{numeroregprofissional})
+    )
+  )
+:
+  $V{matriculaPassado}]]></variableExpression>
+	</variable>
+	<variable name="diretorioAssinatura" class="java.lang.String">
+		<variableExpression><![CDATA[$P{logotipo}.length()>0?
+$P{logotipo}.substring(0, $P{logotipo}.lastIndexOf("pessoa")+6 )+$F{codpessoa}+"/assinaturaDigital/"
+:""]]></variableExpression>
+	</variable>
+	<variable name="diretorioAssinaturaPassado" class="java.lang.String">
+		<variableExpression><![CDATA[$V{auxMontagem}.equals("0") && $P{logotipo}.length()>0?
+$P{logotipo}.substring(0, $P{logotipo}.lastIndexOf("pessoa")+6 )+$F{codpessoa}+"/assinaturaDigital/"
+:$V{diretorioAssinaturaPassado}]]></variableExpression>
+	</variable>
+	<variable name="nomeAtual" class="java.lang.String">
+		<variableExpression><![CDATA[$F{nomerazaosocial}]]></variableExpression>
+	</variable>
+	<group name="auxTeste">
+		<groupExpression><![CDATA[null]]></groupExpression>
+		<groupHeader>
+			<band height="10" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean(
+  !$P{geraVazio}.booleanValue() &&
+  $P{usaEspaco}.booleanValue()
+)]]></printWhenExpression>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="44" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean(
+	!$P{geraVazio}.booleanValue() &&
+	$V{auxMontagem}.equals("0")
+)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement uuid="fa76523e-3f69-4120-869c-1aa2b6047b8e" key="textField-18" mode="Opaque" x="177" y="31" width="200" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+						<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nomerazaosocial}.trim()+
+($F{descrfuncao}==null?
+  "":
+  "\n"+$F{descrfuncao}
+)+
+
+($F{impmatricularesp}.intValue()==0?
+  "":
+  ( $P{seqOrgaoExped}.equals("0")?
+    ( $F{matricula}==null?"":"\nMatrícula: "+$F{matricula} )
+  :
+    ($F{numeroregprofissional}==null?"":"\n" + $F{descrprofissao} + "\n" + $F{numeroregprofissional})
+  )
+)]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="957ab837-dcc6-411d-886b-46edbc96685b" key="line-4" mode="Opaque" x="177" y="31" width="200" height="1" forecolor="#000000" backcolor="#FFFFFF"/>
+					<graphicElement fill="Solid">
+						<pen lineWidth="0.5" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<image scaleImage="FillFrame" hAlign="Left" vAlign="Top" isUsingCache="true" onErrorType="Blank">
+					<reportElement uuid="de53cca6-19c5-4743-ac26-2552a42d01e6" key="image-3" mode="Opaque" x="177" y="4" width="200" height="26" forecolor="#000000" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[new Boolean(
+    $P{logotipo}.length()>0?
+        (new java.io.File( String.valueOf( $V{diretorioAssinatura} ) ).list()).length > 0
+	:false
+)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					</box>
+					<graphicElement fill="Solid">
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+					<imageExpression><![CDATA[$V{diretorioAssinatura}+"/"+
+	(new java.io.File( String.valueOf( $V{diretorioAssinatura} ) ).list())[0]]]></imageExpression>
+				</image>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<printWhenExpression><![CDATA[new Boolean(
+	!$P{geraVazio}.booleanValue() &&
+	$V{auxMontagem}.equals("1")
+)]]></printWhenExpression>
+			<image scaleImage="FillFrame" hAlign="Left" vAlign="Top" isUsingCache="true">
+				<reportElement uuid="8390f0c3-cbf5-4623-94ce-43d6c834af76" key="image-1" mode="Opaque" x="30" y="4" width="200" height="26" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[new Boolean(
+    $P{logotipo}.length()>0?
+	(new java.io.File( String.valueOf( $V{diretorioAssinaturaPassado} ) ).list()).length > 0
+	:false
+)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<graphicElement fill="Solid">
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+				<imageExpression><![CDATA[$V{diretorioAssinaturaPassado}+"/"+
+(new java.io.File( String.valueOf( $V{diretorioAssinaturaPassado} ) ).list())[0]]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement uuid="410baf3c-a477-4111-a974-06f91202d986" key="textField-16" mode="Opaque" x="30" y="31" width="200" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{nomePassado}.trim()+
+($V{funcaoPassado}==null?
+  "":
+  "\n"+$V{funcaoPassado}
+)+
+$V{matriculaPassado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement uuid="f6d4dd9c-9ab9-4b27-94d1-2b2944fef743" key="textField-17" mode="Opaque" x="325" y="31" width="200" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomerazaosocial}.trim()+
+($F{descrfuncao}==null?
+  "":
+  "\n"+$F{descrfuncao}
+)+
+
+($F{impmatricularesp}.intValue()==0?
+  "":
+  ( $P{seqOrgaoExped}.equals("0")?
+    ( $F{matricula}==null?"":"\nMatrícula: "+$F{matricula} )
+  :
+    ($F{numeroregprofissional}==null?"":"\n" + $F{descrprofissao} + "\n" + $F{numeroregprofissional})
+  )
+)]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4777b069-1982-4bbf-906f-8586a1650db5" key="line-2" mode="Opaque" x="30" y="31" width="200" height="1" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="8029c221-3e3f-4377-9a3f-ccb2a801d696" key="line-3" mode="Opaque" x="325" y="31" width="200" height="1" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid">
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<image scaleImage="FillFrame" hAlign="Left" vAlign="Top" isUsingCache="true" onErrorType="Blank">
+				<reportElement uuid="c79a84bb-5546-4f87-8083-8a4b8c9ca298" key="image-2" mode="Opaque" x="325" y="4" width="200" height="26" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[new Boolean(
+    $P{logotipo}.length()>0?
+        (new java.io.File( String.valueOf( $V{diretorioAssinatura} ) ).list()).length > 0
+	:false
+)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<graphicElement fill="Solid">
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+				<imageExpression><![CDATA[$V{diretorioAssinatura}+"/"+
+(new java.io.File( String.valueOf( $V{diretorioAssinatura} ) ).list())[0]]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

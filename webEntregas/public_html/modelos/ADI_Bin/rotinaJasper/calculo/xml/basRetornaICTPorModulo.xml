@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="basRetornaICTPorModulo"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="101"
+		 pageHeight="12"
+		 columnWidth="101"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="seqExercicio" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="codSistema" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="seqControlCalc" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="seqDeCalculo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="rotinaJasper" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select dia from basDia where dia = 1]]></queryString>
+
+	<field name="DIA" class="java.math.BigDecimal"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="12"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="101"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="subreport-1"
+						stretchType="NoStretch"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<subreportParameter  name="seqExercicio">
+						<subreportParameterExpression><![CDATA[$P{seqExercicio}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="codSistema">
+						<subreportParameterExpression><![CDATA[$P{codSistema}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="seqControlCalc">
+						<subreportParameterExpression><![CDATA[$P{seqControlCalc}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="seqDeCalculo">
+						<subreportParameterExpression><![CDATA[$P{seqDeCalculo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{rotinaJasper}+"calculo/modulo/basRetornaICT_modulo"+$P{codSistema}+".jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

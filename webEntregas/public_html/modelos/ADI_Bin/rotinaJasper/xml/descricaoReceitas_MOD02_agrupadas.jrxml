@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="descricaoReceitas_MOD02_agrupadas"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="421"
+		 pageHeight="595"
+		 columnWidth="421"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="seqExercicio" isForPrompting="true" class="java.lang.String">
+		<parameterDescription><![CDATA[Exercicio]]></parameterDescription>
+		<defaultValueExpression ><![CDATA["2007"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="seqControlCalc" isForPrompting="true" class="java.lang.String">
+		<parameterDescription><![CDATA[chave do basFFControladorDeCalculo]]></parameterDescription>
+		<defaultValueExpression ><![CDATA["3"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="seqDeCalculo" isForPrompting="true" class="java.lang.String">
+		<parameterDescription><![CDATA[chave do basFFCalculos]]></parameterDescription>
+		<defaultValueExpression ><![CDATA["27385"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="seqGeracaoDocumento" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["14136"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codTipoDam" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["1100"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="seqFFParcela" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codSistema" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["11"]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT 0 AS ordem, sum( BFFRP.valReceitaParcela ) as valorTotalDaReceita, 
+BR.descrReduzida as descrTipoREceita
+
+FROM basFFReceitasParcela BFFRP
+
+INNER JOIN basReceitas BR ON
+    BFFRP.seqReceita = BR.seqReceita
+    and ( BR.seqTipoReceita <> 4 AND BR.seqTipoReceita <> 5 AND BR.seqTipoReceita <> 6 )
+
+INNER JOIN basTipoDeReceita basTR ON 
+    BR.seqTipoReceita = basTR.seqTipoReceita
+
+WHERE BFFRP.codsistema = 6
+    AND BFFRP.seqControlCalc = $P!{seqControlCalc}
+    AND BFFRP.seqFFParcela = $P!{seqFFParcela}
+    AND BFFRP.seqExercicio = $P!{seqExercicio}
+    AND BFFRP.valReceitaParcela > 0
+
+GROUP BY BR.descrReduzida
+
+UNION
+
+SELECT 1 AS ordem, sum( BFFRP.valReceitaParcela ) as valorTotalDaReceita, 
+basTR.descrTipoREceita AS descrTipoREceita
+
+FROM basFFReceitasParcela BFFRP
+
+INNER JOIN basReceitas BR ON
+    BFFRP.seqReceita = BR.seqReceita
+    AND ( BR.seqTipoReceita = 4 OR BR.seqTipoReceita = 5 OR BR.seqTipoReceita = 6 )
+
+INNER JOIN basTipoDeReceita basTR ON 
+    BR.seqTipoReceita = basTR.seqTipoReceita
+
+WHERE BFFRP.codsistema = 6
+    AND BFFRP.seqControlCalc = $P!{seqControlCalc}
+    AND BFFRP.seqFFParcela = $P!{seqFFParcela}
+    AND BFFRP.seqExercicio = $P!{seqExercicio}
+    AND BFFRP.valReceitaParcela > 0
+
+GROUP BY basTR.descrTipoREceita
+
+UNION
+
+SELECT 2 as ordem,
+    SUM( basFFAD.valorAcrescimo ) AS valorTotalDaReceita, 
+    basR.descrReduzida AS descrTipoREceita
+FROM basFFAcrescimosDoDAM basFFAD
+LEFT JOIN basReceitas basR ON 
+    basFFAD.seqReceita = basR.seqReceita
+LEFT JOIN basTipoDeReceita basTR ON 
+    basR.seqTipoReceita = basTR.seqTipoReceita
+LEFT JOIN basReceitasClassificadas basRC ON 
+    basRC.seqReceita = basR.seqReceita
+    AND basRC.seqExercicio = basFFAD.seqExercicio
+    AND basRC.idAtivo = 1
+WHERE basFFAD.seqGeracaoDocumento = $P!{seqGeracaoDocumento}
+    AND basFFAD.codTipoDam = $P!{codTipoDam}
+    AND basFFAD.seqExercicio = $P!{seqExercicio}
+    AND ( basR.seqTipoReceita = 4 or basR.seqTipoReceita = 5 or basR.seqTipoReceita = 6 )
+    AND basFFAD.valorAcrescimo > 0
+
+GROUP BY basR.descrReduzida
+
+UNION
+
+SELECT 3 as idOrdem, 
+    SUM( basFFAD.valorAcrescimo ) AS valorTotalDaReceita, 
+    basR.descrReduzida AS descrTipoREceita
+FROM basFFAcrescimosDoDAM basFFAD
+LEFT JOIN basReceitas basR ON 
+    basFFAD.seqReceita = basR.seqReceita
+LEFT JOIN basTipoDeReceita basTR ON 
+    basR.seqTipoReceita = basTR.seqTipoReceita
+LEFT JOIN basReceitasClassificadas basRC ON 
+    basRC.seqReceita = basR.seqReceita
+    AND basRC.seqExercicio = basFFAD.seqExercicio
+    AND basRC.idAtivo = 1
+WHERE basFFAD.seqGeracaoDocumento = $P!{seqGeracaoDocumento}
+  AND basFFAD.codTipoDam = $P!{codTipoDam}
+  AND basFFAD.seqExercicio = $P!{seqExercicio}
+  AND ( basR.seqTipoReceita <> 4 and basR.seqTipoReceita <> 5 and basR.seqTipoReceita <> 6 )
+  AND basFFAD.valorAcrescimo > 0
+
+GROUP BY basR.descrReduzida
+
+ORDER by ordem]]></queryString>
+
+	<field name="ORDEM" class="java.math.BigDecimal"/>
+	<field name="VALORTOTALDARECEITA" class="java.math.BigDecimal"/>
+	<field name="DESCRTIPORECEITA" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="10"  isSplitAllowed="true" >
+				<rectangle radius="2" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="112"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="rectangle-3"
+						stretchType="NoStretch"
+						positionType="Float"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" 
+/>
+				</rectangle>
+				<rectangle radius="2" >
+					<reportElement
+						mode="Opaque"
+						x="113"
+						y="0"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="rectangle-4"
+						stretchType="NoStretch"
+						positionType="Float"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<graphicElement stretchType="NoStretch" pen="Thin" fill="Solid" 
+/>
+				</rectangle>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="4"
+						y="0"
+						width="106"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-3"
+						stretchType="NoStretch"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="6" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[Descrição]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="115"
+						y="0"
+						width="36"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-4"
+						stretchType="NoStretch"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="6" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[Valor (R$)]]></text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="6"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="4"
+						y="0"
+						width="106"
+						height="6"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField"
+						stretchType="NoStretch"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="Arial" pdfFontName="Helvetica" size="5" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DESCRTIPORECEITA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="114"
+						y="0"
+						width="38"
+						height="6"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField"
+						stretchType="NoStretch"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="Arial" pdfFontName="Helvetica" size="5" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{VALORTOTALDARECEITA}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

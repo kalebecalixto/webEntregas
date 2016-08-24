@@ -1,0 +1,64 @@
+#sbar
+{
+	position: absolute;
+	border: 1px solid #909090;
+	font-family: arial, helvetica;
+	font-size: 10px;
+	color: #000000;
+	padding: 0px;
+	z-index: 49;
+	background: #FFFFFF;
+}
+
+#sbar td
+{
+	font-size: 12px;
+}
+
+#btnScrollBarLeft, #btnScrollBarRight, #btnScrollBarHide
+{
+	position: relative;
+	border: 0px solid #FFFFFF;
+	height: 22px;
+	background: #F0F0F0;
+	color: #555555;
+	font-family: Verdana;
+	font-size: 6px;
+	font-weight: bold;
+	top: -1px;
+	z-index: 52;
+}
+
+#btnScrollBarLeft
+{
+	border: 1px #999999 solid;
+	width: 10px;
+}
+
+#btnScrollBarRight
+{
+	border: 1px #999999 solid;
+	width: 10px;
+}
+
+#btnScrollBarHide
+{
+	border-top: 1px #999999 solid;
+	border-bottom: 1px #999999 solid;
+	width: 18px;
+	background: #D9D9D9;
+}
+
+#sbarItensBg
+{
+	position: absolute;
+	z-index: 50;
+	top: -1px;
+}
+
+#sbarItens
+{
+	overflow: hidden;
+	position: relative;
+	z-index: 51;
+}

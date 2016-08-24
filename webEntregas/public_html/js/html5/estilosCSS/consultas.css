@@ -1,0 +1,215 @@
+/* /ADI_Intranet_Root/ADI_Programacao/ADI_Bin/estiloCSS */
+/*
+    Document   : consultas
+    Created on : 2 de Janeiro de 2006, 13:41
+    Author     : Diego R. Drumond
+    Description:
+        Folha de estilos para consultas.
+*/
+
+.table_consulta
+{
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.table_consulta td
+{
+    font-family: Verdana;
+    font-size: 10pt;
+    padding-left: 2px;
+    border-bottom: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+}
+
+.cabecalho
+{
+    background-image: url( "../imagens/consultas/tabConsultaCentro.jpg" );
+    height: 30px;
+    padding: 2px;
+    text-align: left;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 10pt;
+    border-bottom: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+}
+
+.table_consulta .numerico
+{
+    text-align: right;
+}
+
+.table_consulta .cor0
+{
+    background-color: #e6e6e6;
+    color: #000000;
+}
+
+.table_consulta .cor1
+{
+    background-color: #efefef;
+    color: #000000;
+}
+
+.table_consulta .mouseover
+{
+    background-color: #fefefe;
+    color: #000000;
+}
+
+.table_paginacao
+{
+    margin-top: 20px;
+    padding: 0px;
+    font-family: Arial;
+    font-size: 8pt;
+}
+
+.table_paginacao .td_anterior
+{
+    text-align: left;
+    width: 60px;
+}
+
+.table_paginacao .td_proximo
+{
+    text-align: right;
+    width: 60px;
+}
+
+.table_paginacao .td_paginas
+{
+    text-align: center;
+}
+
+.table_paginacao a
+{
+    color: #505050;
+    text-decoration: none;
+}
+
+.table_paginacao a:visited
+{
+    color: #505050;
+    text-decoration: none;
+}
+
+.table_paginacao a:hover
+{
+    color: #ff0000;
+    text-decoration: none;
+}
+
+.table_paginacao .pag_atual
+{
+    background-color: #fefefe;
+    border: 1px solid #505050;
+    color: #505050;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.table_manut_utiliza td
+{
+    font-family: Verdana;
+    font-size: 10pt;
+}
+
+.botaoFiltro
+{
+    width: 120px;
+}
+
+.botaoOpcoes
+{
+    width: 160px;
+}
+
+.filtroConsulta
+{
+    border: 1px solid black;
+    height: 19px;
+    width: 250px;
+    font-size: 8pt;    
+    font-weight: bold;
+    font-family: Courier; 
+    color: #000000;
+}
+
+.table_filtro td
+{
+    text-align: right;
+    height: 18px;
+}
+
+.table_opcoes
+{
+    width: 120px;
+    border: 1px solid black;
+    cursor: hand;
+}
+
+.table_opcoes td
+{
+    background-color: #f0f0f0;
+    font-family: Verdana;
+    font-size: 7pt;
+    text-align: left;
+    font-weight: normal;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.table_opcoes_content
+{
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    font-family: Verdana;
+    font-size: 7pt;
+    padding: 5px;
+}
+
+.table_opcoes_content td
+{
+    padding: 2px;
+}
+
+.table_opcoes_content th
+{
+    font-size: 7pt;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.nenhum_registro
+{
+    padding-top: 10px;
+    width: 100%;
+    text-align: center;
+    font-family: Verdana;
+    font-size: 8pt;
+    font-weight: bold;
+}
+
+.totalizacoes td
+{
+    background-color: #dedede;
+    border: 1px solid #dedede;
+    text-align: right;
+}
+
+.label_total
+{
+    font-weight: bold;
+}
+
+.valor_total
+{
+    color: #007700;
+}

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Folha de Estilo Local -->
+    <link rel="stylesheet" href="../../../../ADI_Bin/css/style.css" type="text/css"/>
+    <!-- Estilo do Bootstrap -->
+    <link rel="stylesheet" href="../../../../ADI_Bin/css/bootstrap.min.css" type="text/css"/>
+    <!-- <link rel="stylesheet" href="../../../../ADI_Bin/css/bootstrap-select.min.css" type="text/css"/> -->
+    <!-- Estilo do datatable -->
+    <!-- <link rel="stylesheet" href="../../../../ADI_Bin/DataTables/DataTables-1.10.11/css/dataTables.bootstrap.min.css" type="text/css"/> -->
+
+    <script>
+        var h5 =  function(script) {
+                var tpl = "/{APPNAME}/ADI_Programacao/ADI_Bin/html5/" + script;
+                var src = tpl.replace("{APPNAME}", location.pathname.split("/")[1]);
+                var tag = '<' + 'scr' + 'ipt src="' + src + '"><' + '/sc' + 'ript>';
+                document.write(tag);
+        }
+
+        h5('html5.js');
+
+
+    </script>
+    </head>
+    
+    <body>
+        
+        <div class="container-fluid" style=" height:100%;  width: 100%;">
+            
+            <!-- Modal -->
+            <div class="modal fade" id="detalhesModal" role="dialog">
+                <div class="modal-dialog" style=" width: 90%; height: 90%">
+                <!-- Modal content-->
+                <iframe id="frameDetalhes" style="position: absolute; width: 100%; height: 100%"></iframe>  
+              </div>
+            </div>
+            
+            <div id="mapGoogle" class="map" ></div>
+            
+            <div class="divBtnPesquisar" >
+                <a id="btnNovaPesquisa" href="#" style="width: 100%; height: 100%; display: block">
+                    
+                    <img src="../../../../ADI_Bin/imagens/botoes/pesquisarMap.jpg" style=" position:absolute; top:18%; left: 25%;  width:60%; height:60%">
+                    <!--<img src="../../../../ADI_Bin/imagens/botoes/botton-tranparente.png" style="width:100%; height:100%"> -->
+                </a>
+            </div>
+            
+            <div id="pesquisa" class="divCentral transbox" style="display:table" >
+                <div id="celTab" style="display: table-cell; padding-top:1em; padding-bottom:1em;  vertical-align: middle" >
+                    
+
+
+                    <div class="row" >
+                        <div class="col-sm-12" >
+                            
+                            <div style="padding-bottom: 1em; width: 80%; margin: auto; text-align: center">
+                                <label class="labTel" >Localizador</label>
+                            </div>
+                            
+                            <div id="Error"  style=" display:none; background: rgba(255,0,0,0.5); width: 90%; margin: auto; text-align: center">
+                                <label class="labTel" style="color: white; padding-bottom:0.5em; padding-top:0.5em  " >Não foram encontrados resultados para a pesquisa!</label>
+                            </div>
+                            
+                            <div class="form-group" style="width: 95%; margin: auto; padding-top: 1em;">
+                                <div class="row" >
+                                    <div class="col-sm-12" >
+                                        <div class="input-group">
+                                            <input tabindex="1" id="textNivel" style="font-size:small " type="text" class="form-control" placeholder="Selecione um Nível!">
+                                            <input type="hidden" id="textNivel-seq">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="btnNivel" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul id="ulListaNivel" class="dropdown-menu dropdown-menu-right scrollable-menu" aria-labelledby="btnNivel">
+                                                </ul>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 0.5em">
+                                    <div class="col-sm-12" >
+                                        <div class="input-group">
+                                            <input type="hidden" id="textEstrut-seq">
+                                            <input tabindex="2" id="textEstrut" style="font-size:small " type="text" class="form-control" placeholder="Digite ou Selecione uma Estrutura!">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="btnEstrut" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul id="ulListaEstrut" class="dropdown-menu dropdown-menu-right scrollable-menu" aria-labelledby="btnEstrut">
+                                                </ul>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="input-group" style="padding-top: 10px; width: 80%; margin: auto">
+                        <button tabindex="3" class="btn btn-primary btn-block" type="button" id="btnBuscar" >Buscar Estruturas</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        
+        
+        <script src="../../../../ADI_Bin/js/bootstrap.min.js"></script>
+        <script src="../../../../ADI_Bin/js/bootstrap-select.min.js"></script>
+        <!--<script src="http://maps.google.com/maps/api/js"></script>
+        <script src="../../../../ADI_Bin/js/gmap3.min.js"></script> -->
+        
+        
+        <!--<script src="../../../../../ADI_Bin/DataTables/DataTables-1.10.11/js/jquery.dataTables.min.js"></script>-->
+        <!--<script src="../../../../../ADI_Bin/DataTables/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script>-->
+        
+        
+    <script>
+        
+    $(document).ready(function(){
+        
+        $("#btnBuscar").on("click", null, function(e){
+
+            console.log("botaoBuscar Clicado")
+            
+            //debugger;
+            localizar($("#textNivel-seq").val(),$("#textEstrut-seq").val() );
+            
+            //obterGEOlocalizacao("R Antonio Marçal Muniz, 14 Fonte Grande - Contagem");
+            
+        });
+        
+        var marker = [];
+        /**
+         * Retorna Array de enderecos
+         * @author Kalebe calixto
+         * @param {int} seqNivel  Nivel da estrutura. Caso não seja o ultimo nivel, varrer todas estruturas abaixo do nivel citado
+         * @param {int} seqEstrut Estrutura a pesquisar. Caso não seja o ultimo nivel, varrer todas estruturas abaixo do nivel citado com base na estrutura selecionada
+         * @returns {array} Endereços a ser marcados no mapa
+         */
+        function localizar(seqNivel, seqEstrut){
+            
+            function onsuccess(objeto)            
+                {
+                    //debugger;
+                    rows = null;
+
+                    rows = JSON.parse(objeto.listaEnderecoEstrut);
+                    
+                    nObjetos = rows.length;
+                    console.log(rows.length);
+
+                    if (typeof rows == "string") 
+                    {
+                        if (rows.slice(0, 5) == "error") 
+                        {
+                                var parts = rows.split("|");						
+                                console.error(rows);
+                                alert(parts[0].slice(6,100));
+                                return;
+                        }							
+                    }
+                    if(rows.length == 0)
+                    {
+                        $("#Error").show();
+                    }
+                    else
+                    {
+                        $("#pesquisa").fadeOut(1000);
+                        
+                        //debugger;
+                        function preencheObjeto (interator)
+                        {
+                            if(interator < 0 || isNaN(interator))
+                            {
+                                console.log("prepararMarcador objetos: ");
+                                console.log(rows);
+                                
+                                
+                                if(marker.length > 0)
+                                {
+                                    for(var i = 0; i < marker.length ; i++ )
+                                    {
+                                        marker[i].setMap(null);
+
+                                    }
+                                    marker = [];
+                                };
+                                
+                                prepararMarcador(nObjetos);
+                            }
+                            else
+                            {
+                                geocoder.geocode({'address': rows[interator].endereco}, function(results, status) {
+                                    if (status === google.maps.GeocoderStatus.OK) {
+                                      //console.log(results[0].geometry.location.toJSON());
+                                      latLng = results[0].geometry.location.toJSON();
+                                      rows[interator].lat = latLng.lat;
+                                      rows[interator].lng = latLng.lng;
+                                      rows[interator].endGoogle = results[0].formatted_address;
+                                      
+                                      preencheObjeto(interator-1);
+                                    } 
+                                    else {
+                                      console.log('Não encontrou lat e long de Endereço ' + status);
+                                    }
+                                });
+            
+                                
+                                
+                            }
+                        }
+                        
+                        preencheObjeto((rows.length-1));
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                               
+
+                }
+                function onfail(data)
+                {
+                    /*obj.html(data);*/
+                }
+                
+                var dados = {acao:"buscarEnderecos", ordemNivel:ordemNivel, codEstrut:codEstrut };
+                //debugger;
+                jQuery.ajax(
+                {
+                    type: "GET",
+                    url: url.jsp(),
+                    data: dados,
+                    success: onsuccess,
+                    fail: onfail,
+
+                });
+
+            
+        }
+        
+        
+                
+        /*MAPA API GOOGLE JAVA SCRIPT*/
+        var geocoder = new google.maps.Geocoder();
+        var map;
+        
+        
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('mapGoogle'), {
+                center: null,
+                zoom: 12
+            });
+            
+            geocoder.geocode({'address': "Contagem, Brasil"}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                  //console.log(results[0].geometry.location.toJSON());
+                  map.setCenter(results[0].geometry.location.toJSON());
+                } 
+                else {
+                  console.log('Não encontrou lat e long de Endereço ' + status);
+                }
+            });
+        }
+        
+        google.maps.event.addDomListener(window, "resize", function() {
+            //console.log("redimensionando");
+            var center = map.getCenter();
+            google.maps.event.trigger(map, "resize");
+            map.setCenter(center); 
+        });
+        
+        
+        /**
+         * @author kalebe
+         * @param {int} n posição a ser lida do array de objetos
+         * @returns {undefined}
+         */
+        function prepararMarcador(n){
+            
+            var indiceObjt = n;
+            
+            var row = rows[(indiceObjt-1)];
+
+            //console.log(row);
+            var totalServidor = 0;
+
+            if(row.funcnolocal.toString().indexOf(";") != -1 )
+            {
+              var qtefunc = row.funcnolocal.toString().split(";");
+
+              for(var i = 0; i < qtefunc.length; i++ )
+              {
+                //console.log(qtefunc[i].toString().substring(0,5));  
+                totalServidor += parseInt(qtefunc[i].toString().substring(0,5)) ;
+              }
+            }
+            else
+              totalServidor = parseInt(row.funcnolocal.substring(0,5));  
+
+
+            //console.log(totalServidor);
+
+
+
+            var conteudoInfo = '<div id="iw-container">' +
+                                    '<div class="iw-titulo">'+row.codEstrutura+" - "+row.descrEstrutura+'</div>' +
+                                    '<div class="iw-conteudo">' +
+                                        '<div class="iw-subTitulo">Informações</div>' +
+                                            '<label>Locais na Estrutura: </label>'+
+                                            '<p>'+row.locais.replace(/;/gi,"<br>")+'</p>' +
+                                            '<label>Servidores na Estrutura: </label>'+
+                                            '<p>'+row.funcnolocal.replace(/;/gi,"<br>")+'</p>' +
+                                            '<label>Total de Servidores '+totalServidor+' </label>'+
+                                        '<div class="iw-subTitulo">Endereco</div>' +
+                                            '<p>$P!{ENDE}</p>' +
+                                        '<div class="iw-subTitulo">Contato</div>' +
+                                            '<label>Telefones: </label>'+
+                                            ''+(row.telefone === "null" ? "" : row.telefone )+'<br>'+
+                                            '<label>E-mail: </label>'+
+                                            ''+(row.email === "null" ? "" : row.email )+'<br>'+
+                                            '<label>Website: </label>'+
+                                            ''+(row.homepage === "null" ? "" : row.homepage )+''+
+                                    '</div>' +
+                                    '<div class="iw-bottom-detalhes">'+
+                                    '   <button data-toggle="modal" data-target="#detalhesModal" value="'+row.codEstrutura+" - "+row.descrEstrutura+'" class="btn btn-primary btn-block" type="button" id="btnDetalhes" >Detalhes'+
+                                    '   <input type="hidden" id="hddEstruturaDet_'+indiceObjt+'" value="'+row.seqestruturaorganiz+'"></button> '+
+                                    '</div>' +
+                                    '<div class="iw-bottom-gradient"></div>' +
+                            '</div>';
+
+            adicionarMarcador(indiceObjt, conteudoInfo, row.lat, row.lng, row.endGoogle );
+
+            
+            
+
+           /* //console.log(objetosEndereco);
+            for (var i = 0; i < objetosEndereco.length; i++) 
+            {
+                var row = objetosEndereco[i];
+                
+                //alert("teste"+i)
+                estrutura = row.codEstrutura+" - "+row.descrEstrutura;
+                adicionarMarcador(row.endereco, estrutura, row.telefone, row.email, row.homepage, row.funcnolocal, row.locais, i, row.seqestruturaorganiz );
+            }
+        */
+        }
+        
+        //function adicionarMarcador(posicao, informacoes, time)
+        
+        function adicionarMarcador(indiceObjt, conteudoInfo, lat, lng, endGoogle )
+        {
+            setTimeout(function(){
+                //console.log("teste2");
+                //debugger;
+                
+                var nInfoWindow = marker.length;
+
+                marker.push(new google.maps.Marker({
+                    map: map, 
+                    animation: google.maps.Animation.DROP,
+                    position: {lat:lat, lng:lng}
+                }));
+                //debugger;
+                adicionarInfoWindow(nInfoWindow, conteudoInfo, endGoogle);
+                
+                
+
+
+                
+                if((indiceObjt-1) < 0)
+                    return;
+                else
+                    prepararMarcador((indiceObjt-1));
+            },200);
+        }
+        
+        function adicionarInfoWindow(nInfoWindow, conteudoInfo, endGoogle)
+        {
+            //console.log("teste3");
+            var infowindow = new google.maps.InfoWindow();
+            google.maps.event.addListener(marker[nInfoWindow], 'click', function() {
+                //console.log("teste01 "+indiceObjt);
+                infowindow.setContent(conteudoInfo.replace("$P!{ENDE}", endGoogle));
+                infowindow.setOptions({maxWidth:350});
+                infowindow.open(map, marker[nInfoWindow]);
+            });
+
+            google.maps.event.addListener(infowindow, 'domready', function() {
+                //console.log("teste "+indiceObjt);
+                // Reference to the DIV that wraps the bottom of infowindow
+                var iwOuter = $('.gm-style-iw');
+
+                /* Since this div is in a position prior to .gm-div style-iw.
+                 * We use jQuery and create a iwBackground variable,
+                 * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+                */
+                var iwBackground = iwOuter.prev();
+
+                // Removes background shadow DIV
+                iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+                // Removes white background DIV
+                iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+                // Moves the infowindow 115px to the right.
+                iwOuter.parent().parent().css({left: '115px'});
+
+                // Moves the shadow of the arrow 76px to the left margin.
+                iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+
+                // Moves the arrow 76px to the left margin.
+                iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+
+                // Changes the desired tail shadow color.
+                iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
+
+                // Reference to the div that groups the close button elements.
+                var iwCloseBtn = iwOuter.next();
+
+                // Apply the desired effect to the close button
+                iwCloseBtn.css({opacity: '1', right: '38px', top: '3px', 'box-shadow': '0 0 5px #3990B9'});
+
+                // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
+                if($('.iw-content').height() < 140){
+                  $('.iw-bottom-gradient').css({display: 'none'});
+                }
+
+                // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+                iwCloseBtn.mouseout(function(){
+                  $(this).css({opacity: '1'});
+                });
+            });
+        }
+        
+        
+         
+
+        
+        
+        /*FIM CONSTRUÇÂO MAPA*/
+        
+        function h5root(resource) { return "/{APPNAME}/ADI_Programacao/ADI_Bin/html5/".replace("{APPNAME}", location.pathname.split("/")[1]) + resource; }    
+
+        //debugger;
+
+
+            function onsuccess(objeto)            
+            {
+                //debugger;
+                var rows = null;
+
+                rows = JSON.parse(objeto.listaNivel);
+
+                if (typeof rows == "string") 
+                {
+                    if (rows.slice(0, 5) == "error") 
+                    {
+                            var parts = rows.split("|");						
+                            //console.error(rows);
+                            alert(parts[0].slice(6,100));
+                            return;
+                    }							
+                }
+                var opcoes = "";
+                var compAutoComplet = new Array;
+                var compAutoCompletJson = [];
+
+                //console.log(objeto.listaNivel);
+                for (var i = 0; i < rows.length; i++) 
+                {
+                    var row = rows[i];
+
+                    opcoes += "<li class='lista' ><ordem value="+row.ordem+" /><a id="+row.seq+" href='#'>"+row.descr+"</a></li>";
+
+                    if(i==5)
+                        opcoes += "<li class='divider'></li>";
+
+                    //compAutoComplet[i]="{ label:'"+row.descr+"', value:'"+row.seq+"' }";
+                    compAutoCompletJson[i] = { label:row.descr,value:row.seq, ordem:row.ordem };
+                }
+
+
+                $("#ulListaNivel").html(opcoes);
+                $( "#textNivel" ).autocomplete({
+                    source: compAutoCompletJson,
+                    focus: function( event, ui ) {
+                    $( "#textNivel" ).val( ui.item.label );
+                    return false;
+                    },
+                    select: function(event, ui){
+                        //console.log("objeto Clicado autocomplete Nivel");
+                        //console.log(ui.item.label);
+                        //console.log(ui.item.value);
+                        //console.log(ui.item.ordem);
+                        
+
+                        $("#textNivel").val(ui.item.label);
+                        $("#textNivel").attr("title",ui.item.label);
+                        $("#textNivel-seq").val(ui.item.value);
+                        ordemNivel = ui.item.ordem; 
+                        
+                        return false;
+                    },
+                });                    
+
+            }
+            function onfail(data)
+            {
+                /*obj.html(data);*/
+            }
+
+            var dados = {acao:"carregarComboNivel"};
+            jQuery.ajax(
+            {
+                type: "GET",
+                url: url.jsp(),
+                data: dados,
+                success: onsuccess,
+                fail: onfail,
+
+            });	
+
+
+            $("#ulListaNivel").on("click", "li", function(){
+
+
+                var nivel = $(this).find("a").html();
+                $("#textNivel").html(nivel);
+                $("#textNivel").val(nivel);
+                $("#textNivel").attr("title",nivel);
+                $("#textNivel-seq").val($(this).find("a").attr("id"));
+                ordemNivel = $(this).find("ordem").attr("value");
+                
+                
+                carregaComboEstrutura();
+
+            });
+
+            $("#textNivel").on("blur", null, function(){
+
+                carregaComboEstrutura();
+
+            });
+            
+            codEstrut = "%.";
+            function carregaComboEstrutura(){
+
+                function onsuccess(objeto)            
+                {
+                    //debugger;
+                    var rows = null;
+
+                    rows = JSON.parse(objeto.listaEstrut);
+
+                    if (typeof rows == "string") 
+                    {
+                        if (rows.slice(0, 5) == "error") 
+                        {
+                                var parts = rows.split("|");						
+                                console.error(rows);
+                                alert(parts[0].slice(6,100));
+                                return;
+                        }							
+                    }
+                    var opcoes = "";
+                    var compAutoComplet = new Array();
+                    var compAutoCompletJson = [];
+                    //alert(objeto.lista);
+                    for (var i = 0; i < rows.length; i++) 
+                    {
+                        var row = rows[i];
+
+                        opcoes += "<li class='lista' ><codEstrut value="+row.cod+"/><a id="+row.seq+" href='#'>"+row.descr+"</a></li>";
+
+                        if(i==5)
+                            opcoes += "<li class='divider'></li>";
+
+                        //compAutoComplet[i]="id="+row.seq+""+row.descr;
+                        compAutoCompletJson[i] = { label:row.descr,value:row.seq, codEstrut:row.cod };
+                    }
+                    $("#ulListaEstrut").html(opcoes);
+                    $( "#textEstrut" ).autocomplete({
+                    source: compAutoCompletJson,
+                    focus: function( event, ui ) {
+                    $( "#textEstrut" ).val( ui.item.label );
+                    return false;
+                    },
+                    select: function(event, ui){
+                        //console.log(ui.item.label);
+                        //console.log(ui.item.value);
+
+                        $("#textEstrut").val(ui.item.label);
+                        $("#textEstrut").attr("title", ui.item.label);
+                        $("#textEstrut-seq").val(ui.item.value);
+                        codEstrut = ui.item.codEstrut;
+                        //console.log(codEstrut);
+                        return false;
+                    },
+                });                     
+
+                }
+                function onfail(data)
+                {
+                    /*obj.html(data);*/
+                }
+
+                var dados = {acao:"carregarComboEstrutura", chave:$("#textNivel-seq").val() };
+                jQuery.ajax(
+                {
+                    type: "GET",
+                    url: url.jsp(),
+                    data: dados,
+                    success: onsuccess,
+                    fail: onfail,
+
+                });
+
+            }
+
+            $("#ulListaEstrut").on("click", "li", function(){
+
+
+                var estrut = $(this).find("a").html();
+                $("#textEstrut").html(estrut);
+                $("#textEstrut").val(estrut);
+                $("#textEstrut").attr("title", estrut);
+                $("#textEstrut-seq").val($(this).find("a").attr("id"));
+                codEstrut = $(this).find("codEstrut").attr("value");
+                //console.log(codEstrut);
+                
+            });
+            
+            
+            $("#btnNovaPesquisa").on("click", null, function(){
+                $("#Error").hide();
+                $("#pesquisa").fadeToggle();
+            });
+            
+            
+            $(document).on("click", "#btnDetalhes", function(){ 
+                
+                //alert($(this).val());
+                $(this).find("input:hidden").each(function(){
+                    //alert($(this).val());
+                    seqEstrut = $(this).val(); 
+                });
+                
+                $("#frameDetalhes").attr("src","folLocalizadorDet.html?estrutura="+$(this).val()+"&seqEstrut="+seqEstrut);
+                $("#detalhesModal").modal("show");
+        
+                //$("#divCorpoModal").load('folLocalizadorDet.html?teste=123456');
+            });
+
+            
+            
+            
+            initMap();
+
+        
+        
+    });
+    </script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVzmiF6-EcrYMGZyziJ-lpW9K9DIjw-Qo"></script>
+    
+    </body>
+</html>
