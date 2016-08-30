@@ -18,8 +18,13 @@ Autor: Kalebe Calixto
     </head>
     <body >
         <!-- Implementa a barra de navegação --> 
-        <nav class="navbar navbar-default" style="margin-bottom: 0px">
-            <div class="container-fluid" >
+        
+        
+        
+        <div class="container-fluid" style="padding: 0; height:100%;  width: 100%; background:rgba(0,250,252,0.1);">
+            
+            
+                <nav class="navbar navbar-default" style="margin-bottom: 0px;">
                     <!-- Implementa uma parte para a logo do sistema --> 
                     <div class="navbar-header" >
                         <!-- Implementa Botao que aparece somente se o tamanho da tela for pequeno e implementa os links dentro dele  --> 
@@ -33,44 +38,46 @@ Autor: Kalebe Calixto
                     <!-- Implementa Funcao que determina se os menus irao aparecer no botao acima implementados ou na tela (depende tamanho da tela)  -->
                     <div class="collapse navbar-collapse" id="menuTela" >
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#">Principal</a></li>
+                            <li class="active" ><a href="#">Principal</a></li>
                             <li ><a href="#">Ajuda</a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Cadastra-se</a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Entrar</a></li>   
                         </ul>
                     </div>
-            </div>
-                
         </nav>
-        
-        
-        
-        <div class="container-fluid" style=" height:90%;  width: 100%;">
+
             
-            
-            <div id="pesquisa" class="divCentral transbox" style="display:none" >
+            <div id="pesquisa" class="divCentral transbox" style="display:table" >
                 <div id="celTab" style="display: table-cell; vertical-align: middle" >
                     <div style="padding-bottom: 2em; width: 80%; margin: auto; text-align: center">
-                        <label class="labTel" style="width: 80%; margin: auto">Encontre a melhor opção para sua compra</label>
-                    </div>
-                    <div class="input-group" style="width: 80%; margin: auto">
-                        <div class="input-group-addon">CEPs</div>
-                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Digite o Cep de Entrega">
-                    </div>
-                    <div class="input-group" style="padding-top: 10px; width: 80%; margin: auto">
-                        <button tabindex="3" class="btn btn-primary btn-block" type="button" id="btnGerarEmps" >Buscar Distribuidoras</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="pesquisaComp" class="divCentral transbox" style="display: table;  " >
-                <div id="celTab" style="display: table-cell; vertical-align: middle" >
-                    <div style="padding-bottom: 2em; width: 80%; margin: auto; text-align: center">
-                        <label class="labTel" style="width: 80%; margin: auto">Encontre a melhor opção para sua compra</label>
+                        <label class="labTel" style="width: 80%; margin: auto; color: #FFF">Encontre a melhor opção para sua compra</label>
                     </div>
                     <div class="input-group" style="width: 80%; margin: auto">
                         <div class="input-group-addon">CEP</div>
-                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="teste">
+                        <input id="idCep" type="number" class="form-control" placeholder="Digite o Cep de Entrega">
+                    </div>
+                    <div class="input-group" style="padding-top: 10px; width: 80%; margin: auto">
+                        <button tabindex="3" class="btn btn-primary btn-block" type="button" id="btnBuscarCep" >Buscar Distribuidoras</button>
+                    </div>
+                    <div style="width: 100%; text-align: center; padding-top:1em;"><a href="#" style="color: #FFF; text-decoration: none;">Não sabe seu CEP? Clique aqui</a> </div>
+                </div>
+            </div>
+            
+            
+            <div id="pesquisaComp" class="divCentral transbox" style="display: none;  " >
+                <div id="celTab" style="display: table-cell; vertical-align: middle" >
+                    <div style="padding-bottom: 2em; width: 80%; margin: auto; text-align: center">
+                        <label class="labTel" style="width: 80%; margin: auto">Complete o Endereço</label>
+                    </div>
+                    <div style="width: 80%; margin: auto;">
+                        <div id="idEstado" class="boxLabel" >...</div>
+                        <div id="idCidade" class="boxLabel" style="width: 79%" >...</div>
+                    </div>
+                    <div style="width: 80%; margin: auto; padding-top: 1em">
+                        <div id="idLogradouro" class="boxLabel" style="width: 60%; text-align: left;">...</div>
+                        <input id="idLogradouroInput" type="text" class="boxLabel" style="text-align: left; display: none; width: 60%; border: 0px solid transparent; background:#FFFFFF" placeholder="Rua Castro Alves">
+                        <input id="idNumero" type="text" class="boxLabel" style=" width: 19%; border: 0px solid transparent; background: #FFFFFF" placeholder="Nº">
+                        <input id="idComplemento" type="text" class="boxLabel" style="text-align: left; width: 19%; border: 0px solid transparent; background: #FFFFFF" placeholder="Complemento (Ex: Bloco 3 Apto 302 )">
                     </div>
                     <div class="input-group" style="padding-top: 10px; width: 80%; margin: auto">
                         <button tabindex="3" class="btn btn-primary btn-block" type="button" id="btnGerarEmp" >Buscar Distribuidoras</button>
@@ -86,6 +93,7 @@ Autor: Kalebe Calixto
         
         <script src="js/jquery-2.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/scriptGeral.js"></script>
         
         <!-- <script src="../js/bootstrap-select.min.js"></script> -->
         <!-- <script src="../js/jquery-ui-1.11.4.redmond/jquery-ui.js"></script> -->
@@ -101,15 +109,73 @@ Autor: Kalebe Calixto
         
         $(document).ready(function(){
             
-            $("#btnGerarEmp").on("click", null, function(e){
+            style="background-color: #005F6B"
+            
+            $("#btnBuscarCep").on("click", null, function(e){
                 e.preventDefault();
-                $("#pesquisaComp").animate({opacity: 0.01, left: "100"}, 1000).fadeOut(1000);
-                console.log("teste");
                 
-                $("#pesquisa").delay(1200).fadeIn(1000).css("display", "table");
-                console.log("teste");
+                //Nova variável "cep" somente com dígitos.
+                var cep = $("#idCep").val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+                            //debugger;
+                            console.log(dados);
+                            
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#idEstado").html(dados.uf);
+                                $("#idCidade").html(dados.localidade);
+                                if(dados.logradouro != "")
+                                    $("#idLogradouro").html(dados.logradouro);
+                                else
+                                {
+                                    $("#idLogradouro").css("display", "none");
+                                    $("#idLogradouroInput").css("display", "");
+                                    
+                                }
+                                //$("#bairro").val(dados.bairro);
+                                //$("#uf").val(dados.uf);
+                                //$("#ibge").val(dados.ibge);
+                                
+                                $("#pesquisa").animate({opacity: 0.01, left: "100"}, 1000).fadeOut(1000);
+
+                                $("#pesquisaComp").delay(1200).fadeIn(1000).css("display", "table");
+                            } 
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    alert("Favor Inserir o Cep");
+                }
+                
                 
             });
+            
+            function dadosCep()
+            {
+                
+                
+                
+            }
             
             
         });

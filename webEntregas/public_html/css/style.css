@@ -10,25 +10,6 @@ and open the template in the editor.
 /*
  * style.css 
  */
-.teste .container
-{
-    border: 1px solid red;
-    height: 100%;
-}
-.teste .row 
-{
-    margin-bottom: 2px;
-    margin-top: 2px;
-    border: 1px solid blue;
-}
-.teste [class*="col-"]
-{
-  border: 1px solid green;
-  text-align: center;
-      
-  
-}
-
 html, body 
 { 
     margin:0; height: 100%;
@@ -134,7 +115,7 @@ div.transbox {
   //border: 1px solid black;
   //opacity: 0.3;
   //filter: alpha(opacity=30); /* For IE8 and earlier */
-  background: rgba(0,0,0,0.2)
+  background-color:#00B4CC;
 }
 
 .divCirculo {
@@ -216,4 +197,30 @@ div.transbox {
 	position:absolute;
 	bottom:0;
 	width:100%;
+}
+
+.boxLabel{
+    display: inline-block; 
+    background:#EEE; 
+    width: 20%; 
+    padding: 6px 12px; 
+    border-radius: 4px; 
+    text-align: center
+}
+
+.navbar-default{
+    background-color:#00B4CC !important;
+    border-color:#008C9E !important;
+}
+
+.navbar-default .navbar-nav>li>a{
+    color:#FFF !important;
+}
+
+.navbar-default .navbar-nav> .active >a{
+    background-color:#005F6B !important;
+}
+
+.navbar-default .navbar-brand{
+    color:#FFF !important;
 }
